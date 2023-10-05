@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="prod1" model="product.template">
+            <field name="name">Poulet citron</field>
+            <field name="list_price">1200.00</field>
+            <field name="sale_line_warn">no-message</field>
+        </record>
+
+        <record id="prod2" model="product.template">
+            <field name="name">chao men</field>
+            <field name="list_price">1500.00</field>
+            <field name="sale_line_warn">no-message</field>
+        </record>
+
+    </data>
+</odoo>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Action pour le chargement des données de démonstration -->
+        <record id="client1" model="res.partner">
+            <field name="name">marie_party</field>
+            <field name="phone">40987654</field>
+            <field name="mobile">88112233</field>
+            <field name="email">marie_party@test.odoo</field>
+        </record>
+        <record id="client2" model="res.partner">
+            <field name="name">dorian_Dupond</field>
+            <field name="phone">40921654</field>
+            <field name="mobile">88445566</field>
+            <field name="email">dorian_Dupond@test.odoo</field>
+        </record>
+        <record id="client3" model="res.partner">
+            <field name="name">slayer_kled</field>
+            <field name="phone">40321654</field>
+            <field name="mobile">88778899</field>
+            <field name="email">slayer_kled@test.odoo</field>
+        </record>
+        <record id="client4" model="res.partner">
+            <field name="name">Suzie_annie</field>
+            <field name="phone">40789456</field>
+            <field name="mobile">88224455</field>
+            <field name="email">Suzie_annie@test.odoo</field>
+        </record>
+    </data>
+</odoo>
