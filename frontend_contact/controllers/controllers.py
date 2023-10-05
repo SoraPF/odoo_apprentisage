@@ -4,7 +4,7 @@ from odoo.http import request
 
 
 class FrontendContact(http.Controller):
-    @http.route('/frontend_contact/contact',website=True, auth='public')
+    @http.route('/frontend_contact/contact',website=True, auth='user')
     def index(self, **kw):
         #return "Hello, world"
         contact = request.env['res.partner'].sudo().search([])
