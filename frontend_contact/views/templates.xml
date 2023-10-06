@@ -2,15 +2,13 @@
 <odoo>
     <data>
         <template id="list_contact_page" name="lcp">
-            <!--<xpath expr="." position="inside">
-                <script type="text/javascript" src="/frontend_contact/static/javascript.js"/>
-            </xpath>
-            <t t-call-assets="web.assets_common" t-js="false"/>-->
             <body>
-                <h1>Bienvenue!!</h1>
-
+                <h1>Contact</h1>
+                <h1 class="text-3xl font-bold underline">
+                    Hello world!
+                  </h1>
                 <input type="text" placeholder="Search teams or members" id="search_bar"/>
-                
+
                 <table border="1" id="table">
                     <tr>
                         <td>Nom</td>
@@ -28,25 +26,9 @@
                     </t>
                 </table>
             </body>
-            <script>
-                var input = document.getElementById("search_bar");
-                var table = document.getElementById("table");
-                var rows = Array.from(table.rows);
-                input.addEventListener("input", function() {
-                    var searchValue = input.value.toLowerCase(); // Convertir en minuscules pour une comparaison insensible à la casse
-                    rows.forEach(function(row) {
-                        var cells = Array.from(row.cells);
-                        cells.forEach(function(cell) {
-                            var cellText = cell.textContent.toLowerCase(); // Convertir en minuscules pour une comparaison insensible à la casse
-                            if (cellText.includes(searchValue)) {  //si la valeur appartien a la cellules
-                                cell.style.backgroundColor = "yellow"; // Mettre en évidence les cellules correspondantes
-                            } else {
-                                cell.style.backgroundColor = ""; // Réinitialiser la couleur de fond des autres cellules
-                            }
-                        });
-                    });
-                });
-            </script>
+
+                <script type="text/javascript" src="/frontend_contact/static/javascript.js"/>
+                <link rel="stylesheet" href="/frontend_contact/static/output.css"/>
         </template>
     </data>
 </odoo>
