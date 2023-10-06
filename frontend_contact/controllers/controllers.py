@@ -8,10 +8,10 @@ class FrontendContact(http.Controller):
     def index(self, **kw):
         #return "Hello, world"
         contact = request.env['res.partner'].sudo().search([])
+        search_some = request.env
         return request.render("frontend_contact.list_contact_page", {
             'contact':contact
         })
-
 
 
 #     @http.route('/frontend_contact/frontend_contact/objects', auth='public')

@@ -2,19 +2,44 @@
 <odoo>
     <data>
         <template id="list_contact_page" name="lcp">
-            Bienvenue!!
-            <table>
-                <tr>
-                    <td>Nom</td>
-                    <td>Prénom</td>
-                </tr>
-                <t t-foreach="contact" t-as="ct">
+            <!--<xpath expr="." position="inside">
+                <script type="text/javascript" src="/frontend_contact/static/javascript.js"/>
+            </xpath>
+            <t t-call-assets="web.assets_common" t-js="false"/>-->
+            <script>
+                function myFunction() {
+                var input = document.getElementById("search_bar");
+                var table = document.getElementById("table");
+                //table.textContent = input.value;
+                console.log("test"+ input.value);
+
+                }
+            </script>
+            <body>
+                <h1>Bienvenue!!</h1>
+
+                <input type="text" placeholder="Search teams or members" id="search_bar"/>
+
+                <button onclick="myFunction()">search</button>
+
+                <br/>
+                <table border="1" id="table">
                     <tr>
-                        <td><t t-esc="ct.name"/></td>
-                        <td><t t-esc="ct.mobile"/></td>
+                        <td>Nom</td>
+                        <td>Mobile</td>
                     </tr>
-                </t>
-            </table>
+                    <t t-foreach="contact" t-as="ct">
+                        <tr>
+                            <td>
+                                <t t-esc="ct.name"/>
+                            </td>
+                            <td>
+                                <t t-esc="ct.mobile"/>
+                            </td>
+                        </tr>
+                    </t>
+                </table>
+            </body>
         </template>
     </data>
 </odoo>
