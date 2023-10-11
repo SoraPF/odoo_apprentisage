@@ -21,13 +21,18 @@ input.addEventListener("input", function() {
 */
 //ajax
 
-var xhr = new XMLHttpRequest();
-xhr.open("GET", "/frontend_contact/contact", true);
-xhr.send();
+document.getElementById("submitButton").addEventListener("click", function () {
+    var inputData = input.value.toLowerCase();
+    var xhr = new XMLHttpRequest();
+    xhr.open("GET", "/frontend_contact/contact", true);
+    xhr.setRequestHeader("content-Type", "application/json;charset=UTF-8");
+    xhr.send(JSON.stringify({data: inputData}));
 
-xhr.onreadystatechange = function() {
-    if (xhr.readyState === 4 && xhr.status === 200) {
-        var responseData = JSON.parse(xhr.responseText);
+    xhr.onload = function (){
+        if (xhr.status === 200) {
+            // Réponse du serveur. Vous pouvez traiter la réponse ici.
 
-    }
-};
+            alert("Réponse du serveur : " + xhr.responseText);
+        }
+    };
+});
