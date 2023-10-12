@@ -8,9 +8,11 @@
                 </head>
                 <body>
                     <h1 class="text-3xl font-bold underline">Contact</h1>
-                    <form method="GET" action="">
+                    <form method="POST" action="">
                         <input type="text" placeholder="Search contact" id="search_bar" name="searchBar"
                                class="my-2 w-full text-sm bg-grey-light text-grey-darkest rounded h-10 p-3 focus:outline-none"/>
+                        <ul id="search_results"></ul>
+                        <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
                         <button id="submitButton">Submit</button>
                     </form>
                     <div class="overflow-x-auto">
