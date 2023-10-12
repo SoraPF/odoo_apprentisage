@@ -1,14 +1,14 @@
 # -*- coding: utf-8 -*-
 from odoo import http, models
 from odoo.http import request
-
-
+import logging
 class FrontendContact(http.Controller):
     @http.route('/frontend_contact/contact', website=True, auth='user')
     def index(self, **kw):
         # prendre les données dans contact
         contact = request.env['res.partner'].sudo().search([])
-        input_data = kw.get('data')
+        _logger = logging.getLogger("frontend_contact.frontend_contact")
+        _logger.info("input_data: %s",input_data)
         print("input_data", input_data)
         return request.render("frontend_contact.list_contact_page", {
             'contact': contact,
