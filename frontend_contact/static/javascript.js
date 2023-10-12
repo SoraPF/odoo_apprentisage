@@ -32,7 +32,7 @@ document.getElementById("submitButton").addEventListener("click", function () {
         if (xhr.status === 200) {
             // Réponse du serveur. Vous pouvez traiter la réponse ici.
 
-            alert("Réponse du serveur : " + xhr.responseText);
+            alert("ce que je doit avoir:" + inputData + "Réponse du serveur : " + xhr.responseText);
         }
     };
 });
