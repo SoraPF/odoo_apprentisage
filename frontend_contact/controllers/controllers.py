@@ -11,15 +11,19 @@ class FrontendContact(http.Controller):
         contact = request.env['res.partner'].sudo().search([])
 
         input_data = kw.get('data')
-        data = json.loads(request.httprequest.data)
 
+        data = ""
+
+        if request.httprequest.method == 'GET':
+            value = request.params['searchBar']
+            data = value
         _logger = logging.getLogger("frontend_contact.frontend_contact")
         _logger.info("input_data: %s, test: %s",input_data,data)
 
 
         return request.render("frontend_contact.list_contact_page", {
             'contact': contact,
-            'input_data': input_data
+            'input_data': data
         })
 
 #     @http.route('/frontend_contact/frontend_contact/objects', auth='public')

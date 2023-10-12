@@ -3,11 +3,16 @@
     <data>
         <template id="list_contact_page" name="lcp">
             <html data-theme="synthwave">
+                <head>
+                    <link rel="stylesheet" href="/frontend_contact/static/output.css"/>
+                </head>
                 <body>
                     <h1 class="text-3xl font-bold underline">Contact</h1>
-                    <input type="text" placeholder="Search contact" id="search_bar" name="searchBar"
-                           class="my-2 w-full text-sm bg-grey-light text-grey-darkest rounded h-10 p-3 focus:outline-none"/>
+                    <form method="GET" action="">
+                        <input type="text" placeholder="Search contact" id="search_bar" name="searchBar"
+                               class="my-2 w-full text-sm bg-grey-light text-grey-darkest rounded h-10 p-3 focus:outline-none"/>
                         <button id="submitButton">Submit</button>
+                    </form>
                     <div class="overflow-x-auto">
                         <table id="table" class="table table-zebra">
                             <tr>
@@ -27,12 +32,13 @@
                         </table>
                     </div>
 
-                        <p id="test">Donnée de l' input:<t t-esc="input_data"/></p>
+                    <p id="test">Donnée de l' input:
+                        <t t-esc="input_data"/>
+                    </p>
 
                 </body>
             </html>
             <script type="text/javascript" src="/frontend_contact/static/javascript.js"/>
-            <link rel="stylesheet" href="/frontend_contact/static/output.css"/>
         </template>
     </data>
 </odoo>
