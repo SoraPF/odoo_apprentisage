@@ -17,9 +17,10 @@ class FrontendContact(http.Controller):
             #pour mettre dans les log ce que data vaux
             _logger = logging.getLogger("frontend_contact.frontend_contact")
             _logger.info("input_data>>>>>>>>>>>>>>>>>>>>>>>>>> %s", contact)
-            #rechercher dans res.patner tous les nom qui contient le 'term'
-            contact = request.env['res.partner'].sudo().search([('name', 'ilike', term)])
-            _logger.info("names<<<<<<<<<<<<<<<<: %s", names)
+            #rechercher dans res.patner tous les nom ou tous les mobile qui contient le 'term'
+            contact = request.env['res.partner'].sudo().search([('name', 'ilike', term)]) or request.env['res.partner'].sudo().search([('mobile', 'ilike', term)])
+
+            _logger.info("names<<<<<<<<<<<<<<<<: %s", contact)
 
 
         #retourner la page html avec les donné venant des variable contact et data
