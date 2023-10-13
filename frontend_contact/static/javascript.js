@@ -18,7 +18,7 @@ input.addEventListener("input", function() {
         });
     });
 });
-*/
+
 //ajax
 
 document.getElementById("submitButton").addEventListener("click", function () {
@@ -36,4 +36,4 @@ document.getElementById("submitButton").addEventListener("click", function () {
             console.log("ce que je doit avoir: " + inputData + "\nRéponse du serveur : " + xhr.responseText)
         }
     };
-});
+});*/

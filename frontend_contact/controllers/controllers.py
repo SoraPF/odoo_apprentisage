@@ -16,19 +16,11 @@ class FrontendContact(http.Controller):
             term = request.params['searchBar']#la var data vas stoquer ce que contenais la balise id=searchBar
             #pour mettre dans les log ce que data vaux
             _logger = logging.getLogger("frontend_contact.frontend_contact")
-            _logger.info("input_data: %s", request.params)
+            _logger.info("input_data>>>>>>>>>>>>>>>>>>>>>>>>>> %s", contact)
+            #rechercher dans res.patner tous les nom qui contient le 'term'
+            contact = request.env['res.partner'].sudo().search([('name', 'ilike', term)])
+            _logger.info("names<<<<<<<<<<<<<<<<: %s", names)
+
+
         #retourner la page html avec les donné venant des variable contact et data
         return request.render("frontend_contact.list_contact_page", {'contact': contact, 'input_data': term})
-
-#     @http.route('/frontend_contact/frontend_contact/objects', auth='public')
-#     def list(self, **kw):
-#         return http.request.render('frontend_contact.listing', {
-#             'root': '/frontend_contact/frontend_contact',
-#             'objects': http.request.env['frontend_contact.frontend_contact'].search([]),
-#         })
-
-#     @http.route('/frontend_contact/frontend_contact/objects/<model("frontend_contact.frontend_contact"):obj>', auth='public')
-#     def object(self, obj, **kw):
-#         return http.request.render('frontend_contact.object', {
-#             'object': obj
-#         })
