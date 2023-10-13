@@ -13,5 +13,6 @@ class newContacts(models.Model):
             self.create({
                 'name': firstName + " " + lastName,
                 'phone': faker.phone_number(),
+                'mobile': faker.phone_number(),
                 'email': f"{firstName}.{lastName}@test.odoo",
             })

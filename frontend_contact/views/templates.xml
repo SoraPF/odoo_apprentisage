@@ -10,8 +10,7 @@
                     <h1 class="text-3xl font-bold underline">Contact</h1>
                     <form method="POST" action="">
                         <input type="text" placeholder="Search contact" id="search_bar" name="searchBar"
-                               class="my-2 w-full text-sm bg-grey-light text-grey-darkest rounded h-10 p-3 focus:outline-none"/>
-                        <ul id="search_results"></ul>
+                               class="input input-bordered input-secondary w-full max-w-xs"/>
                         <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
                     </form>
                     <div class="overflow-x-auto">
@@ -33,9 +32,8 @@
                         </table>
                     </div>
 
-                    <p id="test">Donnée de l' input:
-                        <t t-esc="input_data"/>
-                    </p>
+                    <button id="prevBtn" class="btn">Previous</button>
+                    <button id="nextBtn" class="btn">Next</button>
 
                 </body>
                 <script type="text/javascript" src="/frontend_contact/static/javascript.js"/>

@@ -1,2 +1,0 @@
-id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_50_contact_50_contact,50_contact.50_contact,model_50_contact_50_contact,base.group_user,1,1,1,1
