@@ -38,8 +38,8 @@
                     </p>
 
                 </body>
+                <script type="text/javascript" src="/frontend_contact/static/javascript.js"/>
             </html>
-            <script type="text/javascript" src="/frontend_contact/static/javascript.js"/>
         </template>
     </data>
 </odoo>

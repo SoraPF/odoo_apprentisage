@@ -1,0 +1,15 @@
+<odoo>
+    <data>
+<!--
+        <template id="listing">
+        <t t-foreach="contact" t-as="ct">
+            <record id="client1" model="res.partner">
+                <field name="name"><t t-esc="ct.name"/></field>
+                <field name="mobile"><t t-esc="ct.name"/></field>
+                <field name="email"><t t-esc="ct.name"/></field>
+            </record>
+        </t>
+        </template>
+-->
+    </data>
+</odoo>

@@ -18,22 +18,21 @@ input.addEventListener("input", function() {
         });
     });
 });
-
+*/
 //ajax
 
-document.getElementById("submitButton").addEventListener("click", function () {
+input.addEventListener("input", function() {
     var inputData = input.value.toLowerCase();//var qui contient ce que balise search_bar en minuscule
     var xhr = new XMLHttpRequest();//creer une nouvelle requet http
-    xhr.open("GET", "/frontend_contact/contact", true);//ou en vas take/drop les information
+    xhr.open("POST", "/frontend_contact/contact", true);//ou en vas take/drop les information
     xhr.setRequestHeader("content-Type", "application/json;charset=UTF-8");//comment lire
-    xhr.send(JSON.stringify({data: inputData}));//envoyer au serveur data
+    xhr.send();//envoyer au serveur data
 
     xhr.onload = function (){
         if (xhr.status === 200) {
             // Réponse du serveur. Vous pouvez traiter la réponse ici.
             document.getElementById('list_contact_page').innerHTML = xhr.responseText;
-            alert("ce que je doit avoir: " + inputData + "\nRéponse du serveur : " + xhr.responseText);
             console.log("ce que je doit avoir: " + inputData + "\nRéponse du serveur : " + xhr.responseText)
         }
     };
-});*/
+});
