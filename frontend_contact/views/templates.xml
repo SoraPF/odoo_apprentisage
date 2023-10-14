@@ -5,14 +5,20 @@
             <html data-theme="synthwave">
                 <head>
                     <link rel="stylesheet" href="/frontend_contact/static/output.css"/>
+                    <script src="https://code.jquery.com/jquery-3.6.0.min.js">const $ = require('jquery');</script>
                 </head>
                 <body>
                     <h1 class="text-3xl font-bold underline">Contact</h1>
                     <form method="POST" action="">
                         <input type="text" placeholder="Search contact" id="search_bar" name="searchBar"
                                class="input input-bordered input-secondary w-full max-w-xs"/>
+                        <button id="prevBtn" class="btn">Previous</button>
+                        <button id="nextBtn" class="btn">Next</button>
                         <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+
                     </form>
+
+
                     <div class="overflow-x-auto">
                         <table id="table" class="table table-zebra">
                             <tr>
@@ -31,10 +37,6 @@
                             </t>
                         </table>
                     </div>
-
-                    <button id="prevBtn" class="btn">Previous</button>
-                    <button id="nextBtn" class="btn">Next</button>
-
                 </body>
                 <script type="text/javascript" src="/frontend_contact/static/javascript.js"/>
             </html>

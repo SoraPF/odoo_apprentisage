@@ -20,7 +20,7 @@ input.addEventListener("input", function() {
 });
 */
 //ajax
-
+/*
 input.addEventListener("input", function() {
     var inputData = input.value.toLowerCase();//var qui contient ce que balise search_bar en minuscule
     var xhr = new XMLHttpRequest();//creer une nouvelle requet http
@@ -36,5 +36,24 @@ input.addEventListener("input", function() {
         }
     };
 });
+*/
+//table by 10
+document.getElementById("prevBtn").addEventListener("click",function () {
+    pagination(-1);
+});
+document.getElementById("nextBtn").addEventListener("click",function () {
+    pagination(1);
+});
 
-//
+function pagination(direction){
+    var dataToSend = {direction : direction};
+
+    $.ajax({
+        type:"POST",
+        url:"/fr_BE/frontend_contact/contact",
+        data: JSON.stringify(dataToSend),
+        contentType:"application/json",
+        success:function(data){
+        }
+    });
+}
