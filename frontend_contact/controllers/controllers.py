@@ -11,15 +11,17 @@ class FrontendContact(http.Controller):
         #var pour stoquer plus tard les donnée
         term = ""
         contact_per_page = 10
-        direction = int(request.params.get('direction', '0'))
+        direction = request.params.get('direction')
 
         if 'current_page' not in request.session: #cree une valeur dans la session
             request.session['current_page'] = 1
         current_page = request.session['current_page']
-        if(direction==1):
-            current_page+=1
-        elif(direction)==-1:
-            current_page-=1
+        if(direction == '1'):
+            current_page += 1
+            request.session['current_page'] += 1
+        elif(direction) == '-1' and current_page > 1:
+            current_page -= 1
+            request.session['current_page'] -= 1
         offset = (current_page - 1) * contact_per_page
         #si y a un requet avec une method = GET
         if request.httprequest.method == 'POST':
