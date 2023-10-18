@@ -38,22 +38,26 @@ input.addEventListener("input", function() {
 });
 */
 //table by 10
+document.addEventListener("DOMContentLoaded", function () {
 document.getElementById("prevBtn").addEventListener("click",function () {
-    pagination(-1);
+    pagination(-1);console.log('1a');
 });
 document.getElementById("nextBtn").addEventListener("click",function () {
-    pagination(1);
+    pagination(1);console.log('1b');
 });
 
 function pagination(direction){
     var dataToSend = {direction : direction};
-
+    console.log("2");
     $.ajax({
         type:"POST",
         url:"/fr_BE/frontend_contact/contact",
         data: JSON.stringify(dataToSend),
         contentType:"application/json",
         success:function(data){
+            console.log("3");
         }
     });
+    console.log("4");
 }
+});

@@ -12,8 +12,8 @@
                     <form method="POST" action="">
                         <input type="text" placeholder="Search contact" id="search_bar" name="searchBar"
                                class="input input-bordered input-secondary w-full max-w-xs"/>
-                        <button id="prevBtn" class="btn">Previous</button>
-                        <button id="nextBtn" class="btn">Next</button>
+                        <button id="prevBtn" type="button" class="btn">Previous</button>
+                        <button id="nextBtn" type="button" class="btn">Next</button>
                         <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
 
                     </form>
