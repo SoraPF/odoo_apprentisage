@@ -45,7 +45,7 @@ class FrontendContact(http.Controller):
                 current_page = 1
 
         offset = (current_page - 1) * contact_per_page
-                #les contacts qui seront afficher par 10
+                #les contacts qui seront afficher par 10 avec pour contrainte nom ou mobile
         contact = (request.env['res.partner'].sudo().search([('name', 'ilike', term)], limit=contact_per_page, offset=offset) or
                    request.env['res.partner'].sudo().search([('mobile', 'ilike', term)], limit=contact_per_page,offset=offset))
 
