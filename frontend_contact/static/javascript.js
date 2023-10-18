@@ -40,13 +40,13 @@ input.addEventListener("input", function() {
 //table by 10
 document.addEventListener("DOMContentLoaded", function () {
 document.getElementById("prevBtn").addEventListener("click",function () {
-    pagination('-1');
+    pagination('-1',input.value);
 });
 document.getElementById("nextBtn").addEventListener("click",function () {
-    pagination('1');
+    pagination('1',input.value);
 });
 
-function pagination(direction){
+function pagination(direction, valueInput){
     var dataToSend = {direction : direction};
     $.ajax({
         type:"GET",
@@ -54,7 +54,8 @@ function pagination(direction){
         data: dataToSend,
         success:function(data){
             $('#myForm').submit();
-            document.getElementById("search_bar").value = input.value
+            console.log(valueInput);
+            $("#search_bar").val(valueInput);
         }
     });
 }

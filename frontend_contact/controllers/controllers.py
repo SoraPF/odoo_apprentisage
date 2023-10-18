@@ -19,7 +19,7 @@ class FrontendContact(http.Controller):
 
         current_page = request.session['current_page']
 
-        limiteOffset = theLimiteOffset(request.env['res.partner'].sudo().search([]))/10
+        limiteOffset = theLimiteOffset(request.env['res.partner'].sudo().search([]))/contact_per_page
         _logger.info("limitpage>>>>>>>>>>>>>>>>>>>>>>>>>> %s", limiteOffset)
 
         if(direction == '1') and current_page < limiteOffset:
@@ -29,13 +29,23 @@ class FrontendContact(http.Controller):
             current_page -= 1
             request.session['current_page'] -= 1
 
-        offset = (current_page - 1) * contact_per_page
 
-        #si y a un requet avec une method = GET
+
+        #si y a un requête avec une method = POST
         if request.httprequest.method == 'POST':
             term = request.params['searchBar']#la var data vas stoquer ce que contenais la balise id=searchBar
+            _logger.info("term>>>>>>>>>>>>>>>>>>>>>>>>>> %s", term)
 
-        #les contacts qui seront afficher par 10
+            #creer un session pour gardé en mémoire le term
+            if 'searchBarInput' not in request.session:
+                request.session['searchBarInput'] = term
+            if term != request.session['searchBarInput']:
+                request.session['searchBarInput'] = term
+                request.session['current_page'] = 1
+                current_page = 1
+
+        offset = (current_page - 1) * contact_per_page
+                #les contacts qui seront afficher par 10
         contact = (request.env['res.partner'].sudo().search([('name', 'ilike', term)], limit=contact_per_page, offset=offset) or
                    request.env['res.partner'].sudo().search([('mobile', 'ilike', term)], limit=contact_per_page,offset=offset))
 
