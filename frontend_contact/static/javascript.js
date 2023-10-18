@@ -40,24 +40,22 @@ input.addEventListener("input", function() {
 //table by 10
 document.addEventListener("DOMContentLoaded", function () {
 document.getElementById("prevBtn").addEventListener("click",function () {
-    pagination('-1');console.log('1a');
+    pagination('-1');
 });
 document.getElementById("nextBtn").addEventListener("click",function () {
-    pagination('1');console.log('1b');
+    pagination('1');
 });
 
 function pagination(direction){
     var dataToSend = {direction : direction};
-    console.log("2");
     $.ajax({
         type:"GET",
         url:"/fr_BE/frontend_contact/contact",
         data: dataToSend,
         success:function(data){
-            console.log("3");
-
+            $('#myForm').submit();
+            document.getElementById("search_bar").value = input.value
         }
     });
-    console.log("4");
 }
 });
