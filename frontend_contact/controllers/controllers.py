@@ -17,8 +17,7 @@ class FrontendContact(http.Controller):
         if 'current_page' not in request.session: #cree une valeur dans la session
             request.session['current_page'] = 1
 
-        current_page = request.session['current_page']
-        _logger.info("page>>>>>>>>>>>>>>>>>>>>>>>>>> %s", current_page)
+        _logger.info("page>>>>>>>>>>>>>>>>>>>>>>>>>> %s", request.session['current_page'])
 
         # si y a un requête avec une method = POST
         if request.httprequest.method == 'POST':
@@ -30,32 +29,31 @@ class FrontendContact(http.Controller):
             if term != request.session['searchBarInput']:
                 request.session['searchBarInput'] = term
                 request.session['current_page'] = 1
-                current_page = 1
 
         tableau = (request.env['res.partner'].sudo().search([('name', 'ilike', term)]) or request.env['res.partner'].sudo().search([('mobile', 'ilike', term)]))
         limiteOffset = theLimiteOffset(tableau, contact_per_page)
 
         _logger.info("limitpage>>>>>>>>>>>>>>>>>>>>>>>>>> %s", limiteOffset)
 
-        if(direction == '1') and current_page < limiteOffset:
-            current_page += 1
+        if(direction == '1') and request.session['current_page'] < limiteOffset:
             request.session['current_page'] += 1
-        elif(direction) == '-1' and current_page > 1:
-            current_page -= 1
+        elif(direction) == '-1' and request.session['current_page'] > 1:
             request.session['current_page'] -= 1
 
-        offset = (current_page - 1) * contact_per_page
+        offset = (request.session['current_page'] - 1) * contact_per_page
                 #les contacts qui seront afficher par 10 avec pour contrainte nom ou mobile
         contact = (request.env['res.partner'].sudo().search([('name', 'ilike', term)], limit=contact_per_page, offset=offset) or
                    request.env['res.partner'].sudo().search([('mobile', 'ilike', term)], limit=contact_per_page,offset=offset))
-
-        # pour mettre dans les log ce que data vaux
 
         _logger.info("contact>>>>>>>>>>>>>>>>>>>>>>>>>> %s", contact)
 
 
         #retourner la page html avec les donné venant des variable contact et data
-        return request.render("frontend_contact.list_contact_page", {'contact': contact, 'input_data': term, 'current_page':current_page})
+        return request.render("frontend_contact.list_contact_page", {'contact': contact,
+                                                                     'pages': pages,
+                                                                     'input_data': term,
+                                                                     'current_page': request.session['current_page'],
+                                                                     })
 
 def theLimiteOffset(contacts, cpp):
     cpt = 1

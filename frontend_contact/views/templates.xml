@@ -14,7 +14,9 @@
                                class="input input-bordered input-secondary w-full max-w-xs"/>
                         <div class="join">
                           <button id="prevBtn" type="button" class="join-item btn">«</button>
-                          <button class="join-item btn">page <t t-esc="current_page"/></button>
+                            <t t-foreach="pages" t-as="nbpage">
+                                <t t-esc="nbpage"/>
+                            </t>
                           <button id="nextBtn" type="button" class="join-item btn">»</button>
                         </div>
                         <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
