@@ -15,7 +15,7 @@
                         <div class="join">
                           <button id="prevBtn" type="button" class="join-item btn">«</button>
                             <t t-foreach="pages" t-as="nbpage">
-                                <t t-esc="nbpage"/>
+                                <button type="button" class="join-item btn" t-attf-id="btn#{nbpage}"><t t-esc="nbpage"/></button>
                             </t>
                           <button id="nextBtn" type="button" class="join-item btn">»</button>
                         </div>
