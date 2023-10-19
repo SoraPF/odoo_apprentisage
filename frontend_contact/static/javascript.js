@@ -39,15 +39,17 @@ input.addEventListener("input", function() {
 */
 //table by 10
 document.addEventListener("DOMContentLoaded", function () {
-document.getElementById("prevBtn").addEventListener("click",function () {
-    pagination('-1');
+document.getElementById("prevBtn").addEventListener("click",function (e) {
+    e.preventDefault();
+    pagination('-1', input.value);
 });
-document.getElementById("nextBtn").addEventListener("click",function () {
-    pagination('1');
+document.getElementById("nextBtn").addEventListener("click",function (e) {
+    e.preventDefault();
+    pagination('1', input.value);
 });
 
-function pagination(direction){
-    var dataToSend = {direction : direction};
+function pagination(direction,term){
+    var dataToSend = {direction : direction,term : term};
     $.ajax({
         type:"GET",
         url:"/fr_BE/frontend_contact/contact",
