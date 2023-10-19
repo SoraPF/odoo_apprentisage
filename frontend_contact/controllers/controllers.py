@@ -13,11 +13,13 @@ class FrontendContact(http.Controller):
         contact_per_page = 10
         direction = request.params.get('direction')
         term = request.params.get('term')
+        nextPage = request.params.get('newPage')
 
         if 'current_page' not in request.session: #cree une valeur dans la session
             request.session['current_page'] = 1
 
         _logger.info("page>>>>>>>>>>>>>>>>>>>>>>>>>> %s", request.session['current_page'])
+        _logger.info("nextPage>>>>>>>>>>>>>>>>>>>>>>>>>> %s", nextPage)
 
         # si y a un requête avec une method = POST
         if request.httprequest.method == 'POST':
@@ -39,7 +41,8 @@ class FrontendContact(http.Controller):
             request.session['current_page'] += 1
         elif(direction) == '-1' and request.session['current_page'] > 1:
             request.session['current_page'] -= 1
-
+        if nextPage != None:
+            request.session['current_page'] = int(nextPage)
         offset = (request.session['current_page'] - 1) * contact_per_page
                 #les contacts qui seront afficher par 10 avec pour contrainte nom ou mobile
         contact = (request.env['res.partner'].sudo().search([('name', 'ilike', term)], limit=contact_per_page, offset=offset) or

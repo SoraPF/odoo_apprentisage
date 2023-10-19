@@ -60,3 +60,27 @@ function pagination(direction,term){
     });
 }
 });
+
+// Sélectionnez tous les boutons sur la page
+var buttons = document.querySelectorAll('button');
+
+// Parcourez chaque bouton et ajoutez un gestionnaire de clic
+buttons.forEach(function(button) {
+    button.addEventListener('click', function() {
+        // Récupérez le texte du bouton et affichez-le dans les logs
+        var buttonText = button.textContent;
+        console.log(buttonText);
+        newtPage(buttonText,input.value);
+    });
+});
+function newtPage(newPage,term){
+    var dataToSend={newPage:newPage,direction : 0,term : term};
+    $.ajax({
+        type:"GET",
+        url:"/fr_BE/frontend_contact/contact",
+        data: dataToSend,
+        success:function(data){
+            $('#myForm').submit();
+        }
+    })
+}
