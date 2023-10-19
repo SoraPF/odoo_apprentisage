@@ -12,8 +12,11 @@
                     <form method="POST" action="" id="myForm">
                         <input type="text" placeholder="Search contact" id="search_bar" name="searchBar" t-att-value="input_data"
                                class="input input-bordered input-secondary w-full max-w-xs"/>
-                        <button id="prevBtn" type="button" class="btn">Previous</button>
-                        <button id="nextBtn" type="button" class="btn">Next</button>
+                        <div class="join">
+                          <button id="prevBtn" type="button" class="join-item btn">«</button>
+                          <button class="join-item btn">page <t t-esc="current_page"/></button>
+                          <button id="nextBtn" type="button" class="join-item btn">»</button>
+                        </div>
                         <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
 
                     </form>

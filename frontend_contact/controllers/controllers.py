@@ -55,7 +55,7 @@ class FrontendContact(http.Controller):
 
 
         #retourner la page html avec les donné venant des variable contact et data
-        return request.render("frontend_contact.list_contact_page", {'contact': contact, 'input_data': term})
+        return request.render("frontend_contact.list_contact_page", {'contact': contact, 'input_data': term, 'current_page':current_page})
 
 def theLimiteOffset(contacts, cpp):
     cpt = 1
