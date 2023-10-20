@@ -17,6 +17,8 @@ class FrontendContact(http.Controller):
         term = request.params.get('term')
 
         nextPage = request.params.get('newPage')
+        if nextPage is not None:
+            nextPage = int(nextPage)
 
         if 'current_page' not in request.session:
             request.session['current_page'] = 1
@@ -82,7 +84,7 @@ def get_current_page(D, CP, LO, NP):
         CP += 1
     elif (D) == '-1' and CP > 1:
         CP -= 1
-
-    if NP != None:
-        CP = int(NP)
+    else:
+        if NP != None and isinstance(NP, int) and 0 < NP < LO+1:
+            CP = NP
     return CP

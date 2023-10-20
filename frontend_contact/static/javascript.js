@@ -31,20 +31,22 @@ var buttons = document.querySelectorAll('button');
 buttons.forEach(function(button) {
     button.addEventListener('click', function() {
         // take text from button to print in logs and function
-        var buttonText = Number(button.textContent);
+        var buttonText = parseInt(button.textContent);
         console.log(buttonText);
         pagination(buttonText,input.value);
     });
 });
 //function pagination click page and go to the page
 function pagination(newPage,term){
-    var dataToSend={newPage:newPage,direction : 0,term : term};
-    $.ajax({
-        type:"GET",
-        url:"/fr_BE/frontend_contact/contact",
-        data: dataToSend,
-        success:function(data){
-            $('#myForm').submit();
-        }
-    })
+    if (!isNaN(newPage)){
+        var dataToSend={newPage:newPage,direction : 0,term : term};
+        $.ajax({
+            type:"GET",
+            url:"/fr_BE/frontend_contact/contact",
+            data: dataToSend,
+            success:function(data){
+                $('#myForm').submit();
+            }
+        })
+    }
 }
