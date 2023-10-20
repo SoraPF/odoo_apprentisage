@@ -36,20 +36,14 @@ class FrontendContact(http.Controller):
 
         limiteOffset = theLimiteOffset(tableau, contact_per_page)
 
-        if(direction == '1') and current_page < limiteOffset:
-            current_page += 1
-        elif(direction) == '-1' and current_page > 1:
-            current_page -= 1
-
-        if nextPage != None and isinstance(variable, int):
-            current_page = int(nextPage)
+        current_page = get_current_page(direction, current_page, limiteOffset, nextPage)
 
         offset = (current_page - 1) * contact_per_page
 
         contact = (request.env['res.partner'].sudo().search([('name', 'ilike', term)], limit=contact_per_page, offset=offset) or
                    request.env['res.partner'].sudo().search([('mobile', 'ilike', term)], limit=contact_per_page,offset=offset))
 
-        pages = LimitButtonPages(limiteOffset+1,current_page)
+        pages = LimitButtonPages(limiteOffset+1 ,current_page)
 
         request.session['current_page'] = current_page
 
@@ -82,3 +76,13 @@ def LimitButtonPages(limit,pageActuel):
             startPage -= 1
 
     return [i + 1 for i in range(startPage-1, endPage, 1)]
+
+def get_current_page(D, CP, LO, NP):
+    if (D == '1') and CP < LO:
+        CP += 1
+    elif (D) == '-1' and CP > 1:
+        CP -= 1
+
+    if NP != None:
+        CP = int(NP)
+    return CP
