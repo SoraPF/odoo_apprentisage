@@ -50,7 +50,7 @@ class FrontendContact(http.Controller):
 
         _logger.info("contact>>>>>>>>>>>>>>>>>>>>>>>>>> %s", contact)
 
-        pages = nbPage(limiteOffset)
+        pages = nbPage(limiteOffset+1,request.session['current_page'])
 
         #retourner la page html avec les donné venant des variable contact et data
         return request.render("frontend_contact.list_contact_page", {'contact': contact,
@@ -65,6 +65,20 @@ def theLimiteOffset(contacts, cpp):
         cpt += 1
     return (cpt/cpp)
 
-def nbPage(limit):
-    ttpages = [i+1 for i in range(0, int(limit)+1, 1)]
+def nbPage(limit,pageActuel):
+    endPage = pageActuel
+    if(pageActuel < 4):
+        if pageActuel < limit:
+            if pageActuel + 2 <= limit:
+                endPage = pageActuel + 2
+            elif pageActuel + 1 <= limit:
+                endPage = pageActuel + 1
+        ttpages = [i + 1 for i in range(0, endPage, 1)]
+    else:
+        if pageActuel < limit:
+            if pageActuel + 2 <= limit:
+                endPage = pageActuel + 2
+            elif pageActuel + 1 <= limit:
+                endPage = pageActuel + 1
+        ttpages = [i + 1 for i in range(pageActuel-3, endPage, 1)]
     return ttpages
