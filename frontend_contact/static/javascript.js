@@ -1,43 +1,6 @@
 var input = document.getElementById("search_bar");
-var table = document.getElementById("table");
-var rows = Array.from(table.rows);
-var testing = document.getElementById("test")
-/*
-//highlight
-input.addEventListener("input", function() {
-    var searchValue = input.value.toLowerCase(); // Convertir en minuscules pour une comparaison insensible à la casse
-    rows.forEach(function(row) {
-        var cells = Array.from(row.cells);
-        cells.forEach(function(cell) {
-            var cellText = cell.textContent.toLowerCase(); // Convertir en minuscules pour une comparaison insensible à la casse
-            if (cellText.includes(searchValue)) {  //si la valeur appartien a la cellules
-                cell.style.backgroundColor = "#6d071a"; // Mettre en évidence les cellules correspondantes
-            } else {
-                cell.style.backgroundColor = ""; // Réinitialiser la couleur de fond des autres cellules
-            }
-        });
-    });
-});
-*/
-//ajax
-/*
-input.addEventListener("input", function() {
-    var inputData = input.value.toLowerCase();//var qui contient ce que balise search_bar en minuscule
-    var xhr = new XMLHttpRequest();//creer une nouvelle requet http
-    xhr.open("POST", "/frontend_contact/contact", true);//ou en vas take/drop les information
-    xhr.setRequestHeader("content-Type", "application/json;charset=UTF-8");//comment lire
-    xhr.send();//envoyer au serveur data
 
-    xhr.onload = function (){
-        if (xhr.status === 200) {
-            // Réponse du serveur. Vous pouvez traiter la réponse ici.
-            document.getElementById('list_contact_page').innerHTML = xhr.responseText;
-            console.log("ce que je doit avoir: " + inputData + "\nRéponse du serveur : " + xhr.responseText)
-        }
-    };
-});
-*/
-//table by 10
+//request next or previous page
 document.addEventListener("DOMContentLoaded", function () {
 document.getElementById("prevBtn").addEventListener("click",function (e) {
     e.preventDefault();
@@ -61,19 +24,20 @@ function pagination(direction,term){
 }
 });
 
-// Sélectionnez tous les boutons sur la page
+// select all button in page
 var buttons = document.querySelectorAll('button');
 
-// Parcourez chaque bouton et ajoutez un gestionnaire de clic
+// travel each button to add click event
 buttons.forEach(function(button) {
     button.addEventListener('click', function() {
-        // Récupérez le texte du bouton et affichez-le dans les logs
+        // take text from button to print in logs and function
         var buttonText = button.textContent;
         console.log(buttonText);
-        newtPage(buttonText,input.value);
+        pagination(buttonText,input.value);
     });
 });
-function newtPage(newPage,term){
+//function pagination click page and go to the page
+function pagination(newPage,term){
     var dataToSend={newPage:newPage,direction : 0,term : term};
     $.ajax({
         type:"GET",
