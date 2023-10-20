@@ -31,7 +31,7 @@ var buttons = document.querySelectorAll('button');
 buttons.forEach(function(button) {
     button.addEventListener('click', function() {
         // take text from button to print in logs and function
-        var buttonText = button.textContent;
+        var buttonText = Number(button.textContent);
         console.log(buttonText);
         pagination(buttonText,input.value);
     });
