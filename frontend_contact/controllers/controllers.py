@@ -33,8 +33,8 @@ class FrontendContact(http.Controller):
             if term != request.session['searchBarInput']:
                 request.session['searchBarInput'] = term
                 current_page = 1
-
-        tableau = (request.env['res.partner'].sudo().search([('name', 'ilike', term)]) or request.env['res.partner'].sudo().search([('mobile', 'ilike', term)]))
+        element = ['name','mobile']
+        tableau = infoTable(element,term,None,None)
 
         limiteOffset = theLimiteOffset(tableau, contact_per_page)
 
@@ -42,8 +42,7 @@ class FrontendContact(http.Controller):
 
         offset = (current_page - 1) * contact_per_page
 
-        contact = (request.env['res.partner'].sudo().search([('name', 'ilike', term)], limit=contact_per_page, offset=offset) or
-                   request.env['res.partner'].sudo().search([('mobile', 'ilike', term)], limit=contact_per_page,offset=offset))
+        contact = infoTable(element,term,contact_per_page,offset)
 
         pages = LimitButtonPages(limiteOffset+1 ,current_page)
 
@@ -88,3 +87,13 @@ def get_current_page(D, CP, LO, NP):
         if NP != None and isinstance(NP, int) and 0 < NP < LO+1:#check id NextPage not null, is integer and if is in interval [0,limit]
             CP = NP
     return CP
+
+def infoTable(element, term, limit, offset):
+    theTable = []
+    for e in element:
+        if limit is not None and len(theTable) >= limit:
+            break  # Arrête la recherche si la limite est atteinte
+        eleTerm = [(e, 'ilike', term)]
+        results = request.env['res.partner'].sudo().search(eleTerm, limit=(limit - len(theTable)) if limit is not None else False, offset=offset)
+        theTable += results
+    return theTable
