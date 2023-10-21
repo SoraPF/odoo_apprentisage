@@ -57,7 +57,7 @@ class FrontendContact(http.Controller):
 
 def theLimiteOffset(contacts, cpp):
     cpt = 1
-    for contact in contacts:
+    for contact in contacts: #count how many contact have contacts
         cpt += 1
     return (cpt/cpp)
 
@@ -65,13 +65,13 @@ def LimitButtonPages(limit,pageActuel):
     startPage = pageActuel
     endPage = pageActuel
 
-    if endPage < limit:
+    if endPage < limit:#set last page that wee can see in the pagination
         if endPage + 2 <= limit:
             endPage += 2
         elif endPage + 1 <= limit:
             endPage += 1
 
-    if startPage > 0:
+    if startPage > 0:#set first page that wee can see in the pagination
         if startPage - 2 > 0:
             startPage -= 2
         elif startPage - 1 > 0:
@@ -80,11 +80,11 @@ def LimitButtonPages(limit,pageActuel):
     return [i + 1 for i in range(startPage-1, endPage, 1)]
 
 def get_current_page(D, CP, LO, NP):
-    if (D == '1') and CP < LO:
+    if (D == '1') and CP < LO:#check is direction = 1 and current_page < limit
         CP += 1
-    elif (D) == '-1' and CP > 1:
+    elif (D) == '-1' and CP > 1:#check is direction = -1 and current_page > limit
         CP -= 1
     else:
-        if NP != None and isinstance(NP, int) and 0 < NP < LO+1:
+        if NP != None and isinstance(NP, int) and 0 < NP < LO+1:#check id NextPage not null, is integer and if is in interval [0,limit]
             CP = NP
     return CP
