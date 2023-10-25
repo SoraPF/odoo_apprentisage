@@ -12,49 +12,50 @@ class FrontendContact(http.Controller):
 
         contact_per_page = 10
 
-        direction = request.params.get('direction')
-
-        term = request.params.get('term')
-
-        nextPage = request.params.get('newPage')
-        if nextPage is not None:
-            nextPage = int(nextPage)
-
         if 'current_page' not in request.session:
             request.session['current_page'] = 1
 
         current_page = request.session['current_page']
 
-        if request.httprequest.method == 'POST':
-            term = request.params['searchBar']
-
-            if 'searchBarInput' not in request.session:
-                request.session['searchBarInput'] = term
-            if term != request.session['searchBarInput']:
-                request.session['searchBarInput'] = term
-                current_page = 1
         element = ['name','mobile']
-        tableau = infoTable(element,term,None,None)
+        tableau = infoTable(element,"",None,None)
 
-        limiteOffset = theLimiteOffset(tableau, contact_per_page)
+        pagesOffset = getOffset(tableau, contact_per_page)
+
+        offset = (current_page - 1) * contact_per_page
+
+        contact = infoTable(element,"",contact_per_page,offset)
+
+        pages = LimitButtonPages(pagesOffset+1 ,current_page)
+
+        request.session['current_page'] = current_page
+
+        return request.render("frontend_contact.list_contact_page", {'contact': contact, 'pages': pages})
+
+    @http.route('/frontend_contact/PagesButtons', website=True, auth='user')
+    def searching(self, **kw):
+        logger = logging.getLogger("frontend_contact.frontend_contact")
+        contact_per_page=10
+        current_page = request.session['current_page']
+        term = request.params.get('term')
+        direction = request.params.get('direction')
+        element = ['name', 'mobile']
+        nextPage = request.params.get('newPage')
+        if nextPage is not None:
+            nextPage = int(nextPage)
+        logger.info("current_page>>%s, term>>%s, direction>>%s, nextPage>>%s", current_page, term, direction, nextPage)
+        tableau = infoTable(element, term, None, None)
+
+        limiteOffset = getOffset(tableau, contact_per_page)
 
         current_page = get_current_page(direction, current_page, limiteOffset, nextPage)
 
         offset = (current_page - 1) * contact_per_page
 
-        contact = infoTable(element,term,contact_per_page,offset)
+        contactTable = infoTable(element, term, contact_per_page, offset)
+        return request.render("frontend_contact.list_contact_table",{'contact': contactTable})
 
-        pages = LimitButtonPages(limiteOffset+1 ,current_page)
-
-        request.session['current_page'] = current_page
-
-        return request.render("frontend_contact.list_contact_page", {'contact': contact,
-                                                                     'pages': pages,
-                                                                     'input_data': term,
-                                                                     'current_page': request.session['current_page'],
-                                                                     })
-
-def theLimiteOffset(contacts, cpp):
+def getOffset(contacts, cpp):
     cpt = 1
     for contact in contacts: #count how many contact have contacts
         cpt += 1
