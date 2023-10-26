@@ -9,7 +9,7 @@
                 </head>
                 <body>
                     <h1 class="text-3xl font-bold underline">Contact</h1>
-                    <form method="POST" action="" id="myForm">
+
                         <input type="text" placeholder="Search contact" id="search_bar" name="searchBar"
                                t-att-value="input_data"
                                class="input input-bordered input-secondary w-full max-w-xs"/>
@@ -22,9 +22,9 @@
                             </t>
                             <input id="nextBtn" type="button" class="join-item btn" value="next"/>
                         </div>
-                        <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
 
-                    </form>
+
+
 
 
                     <div class="overflow-x-auto">

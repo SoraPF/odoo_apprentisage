@@ -1,27 +1,21 @@
 var input = document.getElementById("search_bar");
 
+//la search bar et tous
+input.addEventListener("input",function(){
+    pagination(null,null,input.value);
+});
+
 //request next or previous page
 document.addEventListener("DOMContentLoaded", function () {
 document.getElementById("prevBtn").addEventListener("click",function (e) {
     e.preventDefault();
-    pagination('-1', input.value);
+    pagination(null,'-1', input.value);
 });
 document.getElementById("nextBtn").addEventListener("click",function (e) {
     e.preventDefault();
-    pagination('1', input.value);
+    pagination(null,'1', input.value);
 });
 
-function pagination(direction,term){
-    var dataToSend = {direction : direction,term : term};
-    $.ajax({
-        type:"GET",
-        url:"/fr_BE/frontend_contact/contact",
-        data: dataToSend,
-        success:function(data){
-            $('#myForm').submit();
-        }
-    });
-}
 });
 
 // select all button in page
@@ -33,15 +27,15 @@ buttons.forEach(function(button) {
         // take text from button to print in logs and function
         var buttonText = parseInt(button.textContent);
         console.log(buttonText);
-        pagination(buttonText,input.value);
+        pagination(buttonText,null,input.value);
     });
 });
 //function pagination click page and go to the page
-function pagination(newPage, term) {
+function pagination(newPage, direction,term) {
     if (!isNaN(newPage)) {
         var dataToSend = {
             newPage: newPage,
-            direction: 0,
+            direction: direction,
             term: term
         };
 
@@ -56,10 +50,10 @@ function pagination(newPage, term) {
                     type: "GET",
                     url: "/fr_BE/frontend_contact/contact",
                     success: function (data2) {
-                        console.log(data);
+                        //console.log(data);
                         // Mettez à jour l'élément HTML avec les données renvoyées par la première requête
                         document.getElementById("table").innerHTML = data;
-                        console.log(data2);
+                        //console.log(data2);
                     },
                     error: function (error2) {
                         // Gérer les erreurs de la deuxième requête

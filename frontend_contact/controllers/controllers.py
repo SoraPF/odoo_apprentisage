@@ -41,18 +41,19 @@ class FrontendContact(http.Controller):
         direction = request.params.get('direction')
         element = ['name', 'mobile']
         nextPage = request.params.get('newPage')
-        if nextPage is not None:
+        if nextPage is not None and nextPage != "":
             nextPage = int(nextPage)
         logger.info("current_page>>%s, term>>%s, direction>>%s, nextPage>>%s", current_page, term, direction, nextPage)
         tableau = infoTable(element, term, None, None)
 
-        limiteOffset = getOffset(tableau, contact_per_page)
+        limitOffset = getOffset(tableau, contact_per_page)
 
-        current_page = get_current_page(direction, current_page, limiteOffset, nextPage)
+        current_page = get_current_page(direction, current_page, limitOffset, nextPage)
 
         offset = (current_page - 1) * contact_per_page
 
         contactTable = infoTable(element, term, contact_per_page, offset)
+        request.session['current_page']=current_page
         return request.render("frontend_contact.list_contact_table",{'contact': contactTable})
 
 def getOffset(contacts, cpp):
