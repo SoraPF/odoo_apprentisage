@@ -1,10 +1,20 @@
 var input = document.getElementById("search_bar");
+var etiquetteDiv = document.getElementById('etiquettes');
 
 //la search bar et tous
 input.addEventListener("input",function(){
-    pagination(null,null,input.value);
+    pagination(1,null,input.value);
 });
-
+input.addEventListener("keydown",function(event){
+    if(event.key === 'Enter'){
+        const text = input.value;
+        const badge = document.createElement('span');
+        badge.testContent = text;
+        badge.classList.add('bg-blue-500', 'text-white', 'px-2', 'py-1', 'rounded-full', 'text-xs');
+        etiquetteDiv.appendChild(badge);
+        input.value = '';
+    }
+});
 //request next or previous page
 document.addEventListener("DOMContentLoaded", function () {
 document.getElementById("prevBtn").addEventListener("click",function (e) {

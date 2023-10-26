@@ -23,9 +23,7 @@
                             <input id="nextBtn" type="button" class="join-item btn" value="next"/>
                         </div>
 
-
-
-
+                    <div id="etiquettes" class="flex flex-wrap space-x-2 space-y-2"></div>
 
                     <div class="overflow-x-auto">
                         <table id="table" class="table table-zebra">
