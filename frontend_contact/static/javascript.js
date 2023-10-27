@@ -5,24 +5,24 @@ var etiquetteDiv = document.getElementById('etiquettes');
 input.addEventListener("input",function(){
     pagination(1,null,input.value);
 });
+
 input.addEventListener("keydown",function(event){
-    if(event.key === 'Enter'){
+    if(event.keyCode === 13){
         const text = input.value;
         const badge = document.createElement('span');
-        badge.testContent = text;
-        badge.classList.add('bg-blue-500', 'text-white', 'px-2', 'py-1', 'rounded-full', 'text-xs');
+        badge.textContent = text;
+        badge.classList.add('badge', 'badge-success', 'gap-2');
         etiquetteDiv.appendChild(badge);
         input.value = '';
     }
 });
+
 //request next or previous page
 document.addEventListener("DOMContentLoaded", function () {
-document.getElementById("prevBtn").addEventListener("click",function (e) {
-    e.preventDefault();
+document.getElementById("prevBtn").addEventListener("click",function () {
     pagination(null,'-1', input.value);
 });
-document.getElementById("nextBtn").addEventListener("click",function (e) {
-    e.preventDefault();
+document.getElementById("nextBtn").addEventListener("click",function () {
     pagination(null,'1', input.value);
 });
 
@@ -36,8 +36,9 @@ buttons.forEach(function(button) {
     button.addEventListener('click', function() {
         // take text from button to print in logs and function
         var buttonText = parseInt(button.textContent);
-        console.log(buttonText);
+        //console.log(buttonText);
         pagination(buttonText,null,input.value);
+
     });
 });
 //function pagination click page and go to the page
@@ -74,6 +75,7 @@ function pagination(newPage, direction,term) {
             error: function (error) {
                 // Gérer les erreurs de la première requête
                 console.error("Erreur de la première requête AJAX");
+                console.log(error);
             }
         });
     }

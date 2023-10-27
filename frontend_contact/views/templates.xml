@@ -15,15 +15,19 @@
                                class="input input-bordered input-secondary w-full max-w-xs"/>
                         <div class="join">
                             <input id="prevBtn" type="button" class="join-item btn" value="prev"/>
+                            <div id="pagesButtons">
                             <t t-foreach="pages" t-as="nbpage">
                                 <button type="button" class="join-item btn" t-attf-id="btn#{nbpage}">
                                     <t t-esc="nbpage"/>
                                 </button>
                             </t>
+                            </div>
                             <input id="nextBtn" type="button" class="join-item btn" value="next"/>
                         </div>
-
-                    <div id="etiquettes" class="flex flex-wrap space-x-2 space-y-2"></div>
+                    <div id="etiquettes" class="flex flex-wrap space-x-2 space-y-2">
+                        <input type="hidden" class="badge badge-success gap-2"/>
+                        <span></span>
+                    </div>
 
                     <div class="overflow-x-auto">
                         <table id="table" class="table table-zebra">
@@ -47,12 +51,12 @@
                 <script type="text/javascript" src="/frontend_contact/static/javascript.js"/>
             </html>
         </template>
-        <template id="list_contact_table" name="lct">
+        <template id="contacts" name="lct">
             <tr>
                 <th>Nom</th>
                 <th>Mobile</th>
             </tr>
-            <t t-foreach="contact" t-as="ct">
+            <t t-foreach="contacts" t-as="ct">
                 <tr>
                     <td>
                         <t t-esc="ct.name"/>
@@ -61,6 +65,13 @@
                         <t t-esc="ct.mobile"/>
                     </td>
                 </tr>
+            </t>
+        </template>
+        <template id="pages" name="listpages">
+            <t t-foreach="pages" t-as="nbpage">
+                <button type="button" class="join-item btn" t-attf-id="btn#{nbpage}">
+                    <t t-esc="nbpage"/>
+                </button>
             </t>
         </template>
 

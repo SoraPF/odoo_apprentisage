@@ -30,6 +30,7 @@ class FrontendContact(http.Controller):
 
         request.session['current_page'] = current_page
 
+
         return request.render("frontend_contact.list_contact_page", {'contact': contact, 'pages': pages})
 
     @http.route('/frontend_contact/PagesButtons', website=True, auth='user')
@@ -53,8 +54,15 @@ class FrontendContact(http.Controller):
         offset = (current_page - 1) * contact_per_page
 
         contactTable = infoTable(element, term, contact_per_page, offset)
-        request.session['current_page']=current_page
-        return request.render("frontend_contact.list_contact_table",{'contact': contactTable})
+
+        pagesOffset = getOffset(tableau, contact_per_page)
+        pages = LimitButtonPages(pagesOffset + 1, current_page)
+        request.session['current_page'] = current_page
+        logger.info("<<<<<<%s>>>>>><<<<<<%s>>>>>>", request.render('frontend_contact.contacts', {'contacts': contactTable}),request.render('frontend_contact.pages',{'pages': pages}))
+
+        contacts_data = request.render('frontend_contact.contacts', {'contacts': contactTable})
+        pages_data = request.render('frontend_contact.pages', {'pages': pages})
+        return contacts_data
 
 def getOffset(contacts, cpp):
     cpt = 1
