@@ -1,9 +1,19 @@
 var input = document.getElementById("search_bar");
 var etiquetteDiv = document.getElementById('etiquettes');
-
+var badges = etiquetteDiv.children;
 //la search bar et tous
 input.addEventListener("input",function(){
-    pagination(1,null,input.value);
+var badges_textContent = []
+if (badges.length > 2){
+    for (var i = 2; i < badges.length; i++) {
+        badges_textContent.push(badges[i].textContent);
+    }
+    console.log(badges_textContent);
+}else{
+    badges_textContent = null;
+}
+
+    paginationWithEtiquette(null, null, badges_textContent, input.value);
 });
 
 input.addEventListener("keydown",function(event){
@@ -12,7 +22,7 @@ input.addEventListener("keydown",function(event){
         const text = input.value;
         const badge = document.createElement('span');
         badge.textContent = text;
-        badge.classList.add('badge', 'badge-success', 'gap-2', 'cursor');
+        badge.classList.add('badge', 'badge-success', 'gap-2', 'cursor-pointer');
         etiquetteDiv.appendChild(badge);
         input.value = '';
     }
@@ -88,21 +98,32 @@ function pagination(newPage, direction, term){
         });
     }
 }
-/*
+
 function paginationWithEtiquette(page, direction, badges, term){
     if (!isNaN(page)) {
         var dataToSend = {  page : page,
                             direction : direction,
-                            badge : badge,
+                            badge : badges,
                             term : term
-                            }
-        $ajax{
+                            };
+        $.ajax({
             type:"GET",
             url: "/fr_BE/frontend_contact/pagination/etiquette",
             data:dataToSend,
             success: function(data){
+                $.ajax({
+                    type:"GET",
+                    url: "/fr_BE/frontend_contact/contact",
+                    success: function(){
+                        document.getElementById("table").innerHTML = data;
 
+                    },error: function (error2) {
+                        console.error("Erreur de la deuxième requête AJAX");
+                    }
+                });
+            },error: function (error2) {
+                console.error("Erreur de la deuxième requête AJAX");
             }
-        }
+        });
     }
-}*/
+}

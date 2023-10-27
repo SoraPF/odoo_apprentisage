@@ -62,8 +62,48 @@ class FrontendContact(http.Controller):
 
         contacts_data = request.render('frontend_contact.contacts', {'contacts': contactTable})
         pages_data = request.render('frontend_contact.pages', {'pages': pages})
+        data = {
+            'contact': contacts_data,
+            'pages': pages_data
+        }
         return contacts_data
 
+    @http.route('/frontend_contact/pagination/etiquette', website=True, auth='user')
+    def searching(self, **kw):
+        logger = logging.getLogger("frontend_contact.frontend_contact")
+        contact_per_page=10
+        current_page = request.session['current_page']
+        term = request.params.get('term')
+        badge = request.params.get('badge')
+        direction = request.params.get('direction')
+        element = ['name', 'mobile']
+        nextPage = request.params.get('newPage')
+        if nextPage is not None and nextPage != "":
+            nextPage = int(nextPage)
+        if badge is not None:
+            for item in badge:
+                logger.info("bnqsdiuberuifhdjqsfpjdqvnv>>> %s",item)
+        else:
+            logger.info("<<<Est bien du coup non c'est pas trop ça>>>")
+        logger.info("current_page>>%s, term>>%s, badge>>%s, direction>>%s, nextPage>>%s", current_page, term, badge, direction, nextPage)
+        tableau = infoTable(element, term, None, None)
+
+        limitOffset = getOffset(tableau, contact_per_page)
+
+        current_page = get_current_page(direction, current_page, limitOffset, nextPage)
+
+        offset = (current_page - 1) * contact_per_page
+
+        contactTable = infoTable(element, term, contact_per_page, offset)
+        contactTable += paginaTable(element, badge, contact_per_page, offset)
+
+        pagesOffset = getOffset(tableau, contact_per_page)
+        pages = LimitButtonPages(pagesOffset + 1, current_page)
+        request.session['current_page'] = current_page
+
+        contacts_data = request.render('frontend_contact.contacts', {'contacts': contactTable})
+        pages_data = request.render('frontend_contact.pages', {'pages': pages})
+        return contacts_data
 def getOffset(contacts, cpp):
     cpt = 1
     for contact in contacts: #count how many contact have contacts
@@ -106,4 +146,15 @@ def infoTable(element, term, limit, offset):
         eleTerm = [(e, 'ilike', term)]
         results = request.env['res.partner'].sudo().search(eleTerm, limit=(limit - len(theTable)) if limit is not None else False, offset=offset)
         theTable += results
+    return theTable
+
+def paginaTable(element, term, limit, offset):
+    theTable = []
+    for e in element:
+        if limit is not None and len(theTable) >= limit:
+            break  # Arrête la recherche si la limite est atteinte
+        for t in term:
+            eleterm = [(e, 'ilike', t)]
+            results = request.env['res.partner'].sudo().search(eleterm, limit=(limit - len(theTable)) if limit is not None else False, offset=offset)
+            theTable += results
     return theTable

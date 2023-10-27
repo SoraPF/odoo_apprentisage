@@ -25,7 +25,7 @@
                             <input id="nextBtn" type="button" class="join-item btn" value="next"/>
                         </div>
                     <div id="etiquettes" class="flex flex-wrap space-x-2 space-y-2">
-                        <input type="hidden" class="badge badge-success gap-2"/>
+                        <input type="hidden" class="badge badge-success gap-2 cursor-pointer"/>
                         <span></span>
                     </div>
 
