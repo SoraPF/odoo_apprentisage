@@ -1586,3 +1586,7 @@ html {
 .underline {
   text-decoration-line: underline;
 }
+
+.cursor {
+    cursor: pointer;
+}

@@ -10,10 +10,17 @@ input.addEventListener("keydown",function(event){
     if(event.keyCode === 13){
         const text = input.value;
         const badge = document.createElement('span');
-        badge.textContent = text;
-        badge.classList.add('badge', 'badge-success', 'gap-2');
+        badge.textContent = "X " + text;
+        badge.classList.add('badge', 'badge-success', 'gap-2', 'cursor');
         etiquetteDiv.appendChild(badge);
         input.value = '';
+    }
+});
+//etiquette
+etiquetteDiv.addEventListener("click", function(event){
+    if(event.target.tagName === "SPAN"){
+        //console.log("Cliqué sur une balise <span>.");
+        event.target.parentNode.removeChild(event.target);
     }
 });
 
