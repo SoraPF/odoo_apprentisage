@@ -13,7 +13,7 @@ if (badges.length > 2){
     badges_textContent = null;
 }
 
-    paginationWithEtiquette(null, null, badges_textContent, input.value);
+    paginationWithEtiquette(1, null, badges_textContent, input.value);
 });
 
 input.addEventListener("keydown",function(event){
@@ -106,6 +106,7 @@ function paginationWithEtiquette(page, direction, badges, term){
                             badge : badges,
                             term : term
                             };
+                            //console.log(badges,dataToSend.badge)
         $.ajax({
             type:"GET",
             url: "/fr_BE/frontend_contact/pagination/etiquette",
@@ -122,7 +123,7 @@ function paginationWithEtiquette(page, direction, badges, term){
                     }
                 });
             },error: function (error2) {
-                console.error("Erreur de la deuxième requête AJAX");
+                console.error("Erreur de la premier requête AJAX");
             }
         });
     }

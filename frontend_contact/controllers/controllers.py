@@ -5,7 +5,6 @@ import json
 from odoo import fields, http, models
 from odoo.http import request
 class FrontendContact(http.Controller):
-    current_page = 1
     @http.route('/frontend_contact/contact', website=True, auth='user')
     def index(self,**kw):
         _logger = logging.getLogger("frontend_contact.frontend_contact")
@@ -34,7 +33,7 @@ class FrontendContact(http.Controller):
         return request.render("frontend_contact.list_contact_page", {'contact': contact, 'pages': pages})
 
     @http.route('/frontend_contact/PagesButtons', website=True, auth='user')
-    def searching(self, **kw):
+    def searchings(self, **kw):
         logger = logging.getLogger("frontend_contact.frontend_contact")
         contact_per_page=10
         current_page = request.session['current_page']
@@ -72,17 +71,18 @@ class FrontendContact(http.Controller):
     def searching(self, **kw):
         logger = logging.getLogger("frontend_contact.frontend_contact")
         contact_per_page=10
-        current_page = request.session['current_page']
+        current_page = int(request.params.get('page'))
         term = request.params.get('term')
-        badge = request.params.get('badge')
+        badge = request.httprequest.args.getlist('badge[]')
         direction = request.params.get('direction')
         element = ['name', 'mobile']
         nextPage = request.params.get('newPage')
         if nextPage is not None and nextPage != "":
             nextPage = int(nextPage)
+        logger.info(request.httprequest.args)
         if badge is not None:
             for item in badge:
-                logger.info("bnqsdiuberuifhdjqsfpjdqvnv>>> %s",item)
+                logger.info("azer>>> %s",item)
         else:
             logger.info("<<<Est bien du coup non c'est pas trop ça>>>")
         logger.info("current_page>>%s, term>>%s, badge>>%s, direction>>%s, nextPage>>%s", current_page, term, badge, direction, nextPage)
