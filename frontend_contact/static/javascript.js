@@ -134,7 +134,19 @@ function paginationWithEtiquette(page, direction, badges, term){
 var devi = document.querySelectorAll('input[value="devis"]');
 devi.forEach(function(button) {
     button.addEventListener("click",function(){
-        console.log("boutton click");
+        var name = button.id;
+        console.log(name);
+         var dataToSend = {  name : name,}
+        $.ajax({
+            type:"GET",
+            url: "/fr_BE/frontend_contact/contact/devis",
+            data:dataToSend,
+            success: function(data){
+                console.log(data);
+            },error: function (error2) {
+                console.error("Erreur de la deuxième requête AJAX");
+            }
+        });
     });
 });
 
