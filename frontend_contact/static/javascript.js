@@ -143,6 +143,7 @@ devi.forEach(function(button) {
             data:dataToSend,
             success: function(data){
                 console.log(data);
+                 document.getElementById("table").innerHTML = data;
             },error: function (error2) {
                 console.error("Erreur de la deuxième requête AJAX");
             }

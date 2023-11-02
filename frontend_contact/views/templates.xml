@@ -83,5 +83,22 @@
             </t>
         </template>
 
+        <template id="deviPage" name="deviPage">
+            <div class="overflow-x-auto">
+                <table id="table" class="table table-zebra">
+                    <tr>
+                        <th>Numéro</th>
+                        <th>vendeur</th>
+                    </tr>
+                    <t t-foreach="devis" t-as="d">
+                        <tr>
+                            <td>
+                                <t t-esc="d"/>
+                            </td>
+                        </tr>
+                    </t>
+                </table>
+            </div>
+        </template>
     </data>
 </odoo>
