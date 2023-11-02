@@ -94,14 +94,14 @@ class FrontendContact(http.Controller):
 
         offset = (current_page - 1) * contact_per_page
 
-        contactTable = infoTable(element, term, contact_per_page, offset)
-        contactTable += paginaTable(element, badge, contact_per_page, offset)
+        contactTable = paginaTable(element, term, badge, contact_per_page, offset)
 
         pagesOffset = getOffset(tableau, contact_per_page)
         pages = LimitButtonPages(pagesOffset + 1, current_page)
         request.session['current_page'] = current_page
 
         contacts_data = request.render('frontend_contact.contacts', {'contacts': contactTable})
+        logger.info("testLog >>> %s, %s",contacts_data, contactTable)
         pages_data = request.render('frontend_contact.pages', {'pages': pages})
         return contacts_data
 def getOffset(contacts, cpp):
@@ -148,13 +148,16 @@ def infoTable(element, term, limit, offset):
         theTable += results
     return theTable
 
-def paginaTable(element, term, limit, offset):
-    theTable = []
+def paginaTable(element, term, badges, limit, offset):
+    theTable = set()  # Utilisez un ensemble pour stocker les résultats uniques
+    badges.append(term)
+
     for e in element:
         if limit is not None and len(theTable) >= limit:
             break  # Arrête la recherche si la limite est atteinte
-        for t in term:
+        for t in badges:
             eleterm = [(e, 'ilike', t)]
             results = request.env['res.partner'].sudo().search(eleterm, limit=(limit - len(theTable)) if limit is not None else False, offset=offset)
-            theTable += results
-    return theTable
+            theTable.update(results)  # Utilisez update() pour ajouter les résultats à l'ensemble
+
+    return list(theTable)  # Convertissez l'ensemble en liste avant de retourner les résultats
