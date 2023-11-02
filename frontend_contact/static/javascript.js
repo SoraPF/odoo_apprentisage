@@ -128,3 +128,13 @@ function paginationWithEtiquette(page, direction, badges, term){
         });
     }
 }
+
+
+//
+var devi = document.querySelectorAll('input[value="devis"]');
+devi.forEach(function(button) {
+    button.addEventListener("click",function(){
+        console.log("boutton click");
+    });
+});
+
