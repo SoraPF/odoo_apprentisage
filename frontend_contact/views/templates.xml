@@ -34,6 +34,7 @@
                             <tr>
                                 <th>Nom</th>
                                 <th>Mobile</th>
+                                <th>Devis</th>
                             </tr>
                             <t t-foreach="contact" t-as="ct">
                                 <tr>
@@ -42,6 +43,9 @@
                                     </td>
                                     <td>
                                         <t t-esc="ct.mobile"/>
+                                    </td>
+                                    <td>
+                                        <input type="button" class="btn s" t-att-id="ct.name" value="devis"/>
                                     </td>
                                 </tr>
                             </t>
