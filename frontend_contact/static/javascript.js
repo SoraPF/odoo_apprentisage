@@ -1,18 +1,10 @@
 var input = document.getElementById("search_bar");
 var etiquetteDiv = document.getElementById('etiquettes');
 var badges = etiquetteDiv.children;
+var badges_textContent = set_etiquette();
+
 //la search bar et tous
 input.addEventListener("input",function(){
-var badges_textContent = []
-if (badges.length > 2){
-    for (var i = 2; i < badges.length; i++) {
-        badges_textContent.push(badges[i].textContent);
-    }
-    console.log(badges_textContent);
-}else{
-    badges_textContent = null;
-}
-
     paginationWithEtiquette(1, null, badges_textContent, input.value);
 });
 
@@ -38,10 +30,10 @@ etiquetteDiv.addEventListener("click", function(event){
 //request next or previous page
 document.addEventListener("DOMContentLoaded", function () {
 document.getElementById("prevBtn").addEventListener("click",function () {
-    pagination(null,'-1', input.value);
+    paginationWithEtiquette(null, '-1', badges_textContent, input.value);
 });
 document.getElementById("nextBtn").addEventListener("click",function () {
-    pagination(null,'1', input.value);
+    paginationWithEtiquette(null, '1', badges_textContent, input.value);
 });
 
 });
@@ -55,39 +47,37 @@ buttons.forEach(function(button) {
         // take text from button to print in logs and function
         var buttonText = parseInt(button.textContent);
         //console.log(buttonText);
-        pagination(buttonText,null,input.value);
-
+        paginationWithEtiquette(buttonText, null, badges_textContent, input.value);
     });
 });
 //function pagination click page and go to the page
-function pagination(newPage, direction, term){
-    if (!isNaN(newPage)) {
-        var dataToSend = {
-            newPage: newPage,
-            direction: direction,
-            term: term
-        };
 
-        // Première requête AJAX pour récupérer les données
+function paginationWithEtiquette(page, direction, badges, term){
+    if (!isNaN(page)) {
+        var dataToSend = {  page : page,
+                            direction : direction,
+                            badge : badges,
+                            term : term
+                            };
+                            //console.log(badges,dataToSend.badge)
         $.ajax({
-            type: "GET",
-            url: "/fr_BE/frontend_contact/PagesButtons",
+            type:"GET",
+            url: "/fr_BE/frontend_contact/pagination/etiquette",
             dataType:'json',
-            data: dataToSend,
-            success: function (data) {
-                // Deuxième requête AJAX pour récupérer des données supplémentaires
+            data:dataToSend,
+            success: function(data){
                 $.ajax({
-                    type: "GET",
+                    type:"GET",
                     url: "/fr_BE/frontend_contact/contact",
-                    success: function (data2) {
+                    success: function(voids){
                         console.log(data);
                         var row = document.querySelectorAll('table tr');
                         var btnDiv = document.getElementById('pagesButtons');
                         btnDiv.textContent = '';
                         for (var i = 1; i < row.length; i++) {
                             var cells = row[i].querySelectorAll('td');
-                            var name = data.contact_name[i-1];
-                            var mobile = data.contact_mobile[i-1];
+                            var name = data.cNom[i-1];
+                            var mobile = data.cMobile[i-1];
 
                             if(name){
                             cells[0].textContent = name;
@@ -106,44 +96,10 @@ function pagination(newPage, direction, term){
                             btnNew.textContent = item;
                             btnNew.classList.add('join-item', 'btn');
                             btnNew.addEventListener('click', function() {
-                                pagination(item,null,input.value);
+                                paginationWithEtiquette(item, null, badges_textContent, input.value);
                             });
                             btnDiv.appendChild(btnNew);
                         });
-                    },
-                    error: function (error2) {
-                        // Gérer les erreurs de la deuxième requête
-                        console.error("Erreur de la deuxième requête AJAX");
-                    }
-                });
-            },
-            error: function (error) {
-                // Gérer les erreurs de la première requête
-                console.error("Erreur de la première requête AJAX");
-                console.log(error);
-            }
-        });
-    }
-}
-
-function paginationWithEtiquette(page, direction, badges, term){
-    if (!isNaN(page)) {
-        var dataToSend = {  page : page,
-                            direction : direction,
-                            badge : badges,
-                            term : term
-                            };
-                            //console.log(badges,dataToSend.badge)
-        $.ajax({
-            type:"GET",
-            url: "/fr_BE/frontend_contact/pagination/etiquette",
-            data:dataToSend,
-            success: function(data){
-                $.ajax({
-                    type:"GET",
-                    url: "/fr_BE/frontend_contact/contact",
-                    success: function(){
-                        document.getElementById("table").innerHTML = data;
 
                     },error: function (error2) {
                         console.error("Erreur de la deuxième requête AJAX");
@@ -178,3 +134,15 @@ devi.forEach(function(button) {
     });
 });
 
+function set_etiquette(){
+var badges_textContent = [];
+if (badges.length > 2){
+    for (var i = 2; i < badges.length; i++) {
+        badges_textContent.push(badges[i].textContent);
+    }
+    console.log(badges_textContent);
+}else{
+    badges_textContent = null;
+}
+return badges_textContent;
+}
