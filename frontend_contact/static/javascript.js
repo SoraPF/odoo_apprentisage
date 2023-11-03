@@ -78,9 +78,11 @@ function paginationWithEtiquette(page, direction, badges, term){
                             var cells = row[i].querySelectorAll('td');
                             var name = data.cNom[i-1];
                             var mobile = data.cMobile[i-1];
+                            var img = data.cImg;
 
                             if(name){
-                            cells[0].textContent = name;
+                            cells[0].querySelector('b').textContent = name;
+                            cells[0].querySelector('img').src = "data:image/svg+xml;base64,"+img;
                             cells[2].childNodes[1].id = name;
                             }else{
                             cells[0].textContent = "";

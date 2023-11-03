@@ -39,10 +39,8 @@
                             <t t-foreach="contact" t-as="ct">
                                 <tr>
                                     <td>
-                                        <div class="avatar mask mask-squircle w-12 h-12">
-                                        <img t-att-src="image_data_uri(ct.avatar_128)" alt="Employee Image"/>
-                                        </div>
-                                        <t t-esc="ct.name"/>
+                                        <img t-att-src="image_data_uri(ct.avatar_128)" alt="Employee Image" class="avatar mask mask-squircle w-12 h-12"/>
+                                        <b><t t-esc="ct.name"/></b>
                                     </td>
                                     <td>
                                         <t t-esc="ct.mobile"/>

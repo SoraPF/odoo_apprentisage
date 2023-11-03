@@ -2,6 +2,8 @@
 import logging
 import pprint
 import json
+import base64
+import requests
 from odoo import fields, http, models
 from odoo.http import request
 class FrontendContact(http.Controller):
@@ -39,13 +41,13 @@ class FrontendContact(http.Controller):
         badge = request.httprequest.args.getlist('badge[]')
         direction = request.params.get('direction')
         element = ['name', 'mobile']
-        nextPage = request.params.get('newPage')
+        nextPage = request.params.get('page')
         if nextPage is not None and nextPage != "":
             nextPage = int(nextPage)
         logger.info(request.httprequest.args)
 
         limitOffset = getOffset(paginaTable(element, term, badge, None, None), contact_per_page)
-        current_page = get_current_page(direction, int(request.params.get('page')), limitOffset, nextPage)
+        current_page = get_current_page(direction, limitOffset, nextPage)
 
         offset = (current_page - 1) * contact_per_page
         contactTable = paginaTable(element, term, badge, contact_per_page, offset)
@@ -56,6 +58,7 @@ class FrontendContact(http.Controller):
             'pages': pages,
             'cNom': contactTable.mapped('name'),
             'cMobile': contactTable.mapped('mobile'),
+            'cImg': base64.b64encode(contactTable.mapped('avatar_128')[0]).decode('utf-8'),
         }
 
         return json.dumps(response)
@@ -101,15 +104,15 @@ def LimitButtonPages(limit, pageActuel):
     return [i + 1 for i in range(startPage - 1, endPage, 1)]
 
 
-def get_current_page(D, CP, LO, NP):
-    if CP == request.session['current_page']:
-        if (D == '1') and CP < LO:  # check is direction = 1 and current_page < limit
-            CP += 1
-        elif (D) == '-1' and CP > 1:  # check is direction = -1 and current_page > limit
-            CP -= 1
-        else:
-            if NP != None and isinstance(NP, int) and 0 < NP < LO + 1:  # check id NextPage not null, is integer and if is in interval [0,limit]
-                CP = NP
+def get_current_page(D, LO, NP):
+    CP = request.session['current_page']
+    if (D == '1') and CP < LO:  # check is direction = 1 and current_page < limit
+        CP += 1
+    elif (D) == '-1' and CP > 1:  # check is direction = -1 and current_page > limit
+        CP -= 1
+    else:
+        if NP != None and isinstance(NP, int) and 0 < NP < LO + 1:  # check id NextPage not null, is integer and if is in interval [0,limit]
+            CP = NP
     request.session['current_page'] = CP
     return CP
 
