@@ -85,8 +85,8 @@ function paginationWithEtiquette(page, direction, badges, term){
                             cells[0].querySelector('img').src = "data:image/svg+xml;base64,"+img;
                             cells[2].childNodes[1].id = name;
                             }else{
-                            cells[0].textContent = "";
-                            cells[2].childNodes[1].id = "";
+                            cells[0].querySelector('b').textContent = "";
+                            cells[0].querySelector('img').src = "";
                             }
 
                             if (mobile){cells[1].textContent = mobile;}
