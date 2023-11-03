@@ -125,8 +125,7 @@ devi.forEach(function(button) {
             url: "/fr_BE/frontend_contact/contact/devis",
             data:dataToSend,
             success: function(data){
-                console.log(data);
-                //window.location.href = "/fr_BE/frontend_contact/contact/devis";
+                document.getElementById("page").innerHTML = data;
             },error: function (error) {
                 console.error("Erreur de la requête AJAX");
             }

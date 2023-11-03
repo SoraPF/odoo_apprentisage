@@ -2,7 +2,7 @@
 <odoo>
     <data>
         <template id="list_contact_page" name="lcp">
-            <html data-theme="synthwave">
+            <html data-theme="synthwave" id="page">
                 <head>
                     <link rel="stylesheet" href="/frontend_contact/static/output.css"/>
                     <script src="https://code.jquery.com/jquery-3.6.0.min.js">const $ = require('jquery');</script>
@@ -57,13 +57,12 @@
         </template>
 
         <template id="deviPage" name="deviPage">
-            <html data-theme="synthwave">
                 <head>
                     <link rel="stylesheet" href="/frontend_contact/static/output.css"/>
                     <script src="https://code.jquery.com/jquery-3.6.0.min.js">const $ = require('jquery');</script>
                 </head>
                 <body>
-                    <a href="/fr_BE/frontend_contact/contact"><button>List Contact</button></a>
+                    <a href="/fr_BE/frontend_contact/contact"><button class="join-item btn">List Contact</button></a>
                     <div class="overflow-x-auto">
                         <table id="table" class="table table-zebra">
                             <tr>
@@ -91,7 +90,6 @@
                         </table>
                     </div>
                 </body>
-            </html>
         </template>
     </data>
 </odoo>
