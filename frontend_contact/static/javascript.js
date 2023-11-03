@@ -84,16 +84,23 @@ function pagination(newPage, direction, term){
                         var row = document.querySelectorAll('table tr');
                         var btnDiv = document.getElementById('pagesButtons');
                         btnDiv.textContent = '';
-                        data.contact_name.forEach(function(item, index){
-                            var cells = row[index+1].querySelectorAll('td');
-                            cells[0].textContent = item;
-                            cells[2].childNodes[1].id = item;
-                        });
-                        data.contact_mobile.forEach(function(item, index){
-                            var cells = row[index+1].querySelectorAll('td');
-                            if (item){cells[1].textContent = item;}
+                        for (var i = 1; i < row.length; i++) {
+                            var cells = row[i].querySelectorAll('td');
+                            var name = data.contact_name[i-1];
+                            var mobile = data.contact_mobile[i-1];
+
+                            if(name){
+                            cells[0].textContent = name;
+                            cells[2].childNodes[1].id = name;
+                            }else{
+                            cells[0].textContent = "";
+                            cells[2].childNodes[1].id = "";
+                            }
+
+                            if (mobile){cells[1].textContent = mobile;}
                             else{cells[1].textContent = "";}
-                        });
+                        }
+
                         data.pages.forEach(function(item,index){
                             var btnNew = document.createElement('button');
                             btnNew.textContent = item;
