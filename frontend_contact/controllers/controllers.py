@@ -62,18 +62,17 @@ class FrontendContact(http.Controller):
 
     @http.route('/frontend_contact/contact/devis', website=True, auth='user')
     def devi(self, **kw):
+        logger = logging.getLogger("frontend_contact.frontend_contact")
         cName = request.params.get('name')
         partner = request.env['res.partner'].search([('name', '=', cName)])
         if partner:
             devis = request.env['sale.order'].search([('partner_id', '=', partner.id)])
-            users = devis.mapped('user_id').mapped('name')
             response = {
-                "devis": [devi.name for devi in devis],
-                "seller": list(users),
+                "devis": devis,
             }
             return request.render('frontend_contact.deviPage', response)
         else:
-            return "Contact non trouvé"
+            return None
 
 
 def getOffset(contacts, cpp):

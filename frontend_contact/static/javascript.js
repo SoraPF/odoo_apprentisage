@@ -126,9 +126,9 @@ devi.forEach(function(button) {
             data:dataToSend,
             success: function(data){
                 console.log(data);
-                 document.getElementById("table").innerHTML = data;
-            },error: function (error2) {
-                console.error("Erreur de la deuxième requête AJAX");
+                //window.location.href = "/fr_BE/frontend_contact/contact/devis";
+            },error: function (error) {
+                console.error("Erreur de la requête AJAX");
             }
         });
     });
