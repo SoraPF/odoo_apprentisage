@@ -72,6 +72,7 @@ function pagination(newPage, direction, term){
         $.ajax({
             type: "GET",
             url: "/fr_BE/frontend_contact/PagesButtons",
+            dataType:'json',
             data: dataToSend,
             success: function (data) {
                 // Deuxième requête AJAX pour récupérer des données supplémentaires
@@ -79,10 +80,29 @@ function pagination(newPage, direction, term){
                     type: "GET",
                     url: "/fr_BE/frontend_contact/contact",
                     success: function (data2) {
-                        //console.log(data);
-                        //Mettez à jour l'élément HTML avec les données renvoyées par la première requête
-                        document.getElementById("table").innerHTML = data;
-                        //console.log(data2);
+                        console.log(data);
+                        var row = document.querySelectorAll('table tr');
+                        var btnDiv = document.getElementById('pagesButtons');
+                        btnDiv.textContent = '';
+                        data.contact_name.forEach(function(item, index){
+                            var cells = row[index+1].querySelectorAll('td');
+                            cells[0].textContent = item;
+                            cells[2].childNodes[1].id = item;
+                        });
+                        data.contact_mobile.forEach(function(item, index){
+                            var cells = row[index+1].querySelectorAll('td');
+                            if (item){cells[1].textContent = item;}
+                            else{cells[1].textContent = "";}
+                        });
+                        data.pages.forEach(function(item,index){
+                            var btnNew = document.createElement('button');
+                            btnNew.textContent = item;
+                            btnNew.classList.add('join-item', 'btn');
+                            btnNew.addEventListener('click', function() {
+                                pagination(item,null,input.value);
+                            });
+                            btnDiv.appendChild(btnNew);
+                        });
                     },
                     error: function (error2) {
                         // Gérer les erreurs de la deuxième requête
