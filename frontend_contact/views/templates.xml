@@ -39,6 +39,9 @@
                             <t t-foreach="contact" t-as="ct">
                                 <tr>
                                     <td>
+                                        <div class="avatar mask mask-squircle w-12 h-12">
+                                        <img t-att-src="image_data_uri(ct.avatar_128)" alt="Employee Image"/>
+                                        </div>
                                         <t t-esc="ct.name"/>
                                     </td>
                                     <td>
@@ -57,39 +60,41 @@
         </template>
 
         <template id="deviPage" name="deviPage">
-                <head>
-                    <link rel="stylesheet" href="/frontend_contact/static/output.css"/>
-                    <script src="https://code.jquery.com/jquery-3.6.0.min.js">const $ = require('jquery');</script>
-                </head>
-                <body>
-                    <a href="/fr_BE/frontend_contact/contact"><button class="join-item btn">List Contact</button></a>
-                    <div class="overflow-x-auto">
-                        <table id="table" class="table table-zebra">
+            <head>
+                <link rel="stylesheet" href="/frontend_contact/static/output.css"/>
+                <script src="https://code.jquery.com/jquery-3.6.0.min.js">const $ = require('jquery');</script>
+            </head>
+            <body>
+                <a href="/fr_BE/frontend_contact/contact">
+                    <button class="join-item btn">List Contact</button>
+                </a>
+                <div class="overflow-x-auto">
+                    <table id="table" class="table table-zebra">
+                        <tr>
+                            <th>Numéro</th>
+                            <th>date de la commande</th>
+                            <th>vendeur</th>
+                            <th>Total</th>
+                        </tr>
+                        <t t-foreach="devis" t-as="dv">
                             <tr>
-                                <th>Numéro</th>
-                                <th>date de la commande</th>
-                                <th>vendeur</th>
-                                <th>Total</th>
+                                <td>
+                                    <t t-esc="dv.name"/>
+                                </td>
+                                <td>
+                                    <t t-esc="dv.date_order"/>
+                                </td>
+                                <td>
+                                    <t t-esc="dv.user_id.name"/>
+                                </td>
+                                <td>
+                                    <t t-esc="dv.amount_total"/>
+                                </td>
                             </tr>
-                            <t t-foreach="devis" t-as="dv">
-                                <tr>
-                                    <td>
-                                        <t t-esc="dv.name"/>
-                                    </td>
-                                    <td>
-                                        <t t-esc="dv.date_order"/>
-                                    </td>
-                                    <td>
-                                        <t t-esc="dv.user_id.name"/>
-                                    </td>
-                                    <td>
-                                        <t t-esc="dv.amount_total"/>
-                                    </td>
-                                </tr>
-                            </t>
-                        </table>
-                    </div>
-                </body>
+                        </t>
+                    </table>
+                </div>
+            </body>
         </template>
     </data>
 </odoo>
