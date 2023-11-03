@@ -53,10 +53,9 @@ class FrontendContact(http.Controller):
 
         contactTable = infoTable(element, term, contact_per_page, offset)
 
-        pagesOffset = getOffset(tableau, contact_per_page)
-        pages = LimitButtonPages(pagesOffset + 1, current_page)
+        pages = LimitButtonPages(limitOffset, current_page)
         request.session['current_page'] = current_page
-        logger.info("<<<<<<%s>>>>>><<<<<<%s>>>>>>", pages, contactTable)
+        logger.info("<<<<<<%s>>>>>><<<<<<%s>>>>>>", pages, limitOffset)
 
         data = {
             'contact_name': contactTable.mapped('name'),
@@ -124,7 +123,7 @@ def getOffset(contacts, cpp):
     cpt = 1
     for contact in contacts:  # count how many contact have contacts
         cpt += 1
-    return (cpt / cpp)
+    return (cpt/cpp)
 
 
 def LimitButtonPages(limit, pageActuel):
@@ -166,7 +165,9 @@ def infoTable(element, term, limit, offset):
         eleTerm = [(e, 'ilike', term)]
         results = request.env['res.partner'].sudo().search(eleTerm, limit=(
                     limit - len(theTable)) if limit is not None else False, offset=offset)
-        theTable += results
+        for res in results:
+            if res not in theTable:
+                theTable += res
     return theTable
 
 
