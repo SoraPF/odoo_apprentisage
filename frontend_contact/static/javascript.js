@@ -82,7 +82,7 @@ function paginationWithEtiquette(page, direction, badges, term){
 
                             if(name){
                             cells[0].querySelector('b').textContent = name;
-                            cells[0].querySelector('img').src = "data:image/svg+xml;base64,"+img;
+                            cells[0].querySelector('img').src = "data:image/svg+xml;base64,"+encodeURI(img);//fonctionne pas comme je veux
                             cells[2].childNodes[1].id = name;
                             }else{
                             cells[0].querySelector('b').textContent = "";

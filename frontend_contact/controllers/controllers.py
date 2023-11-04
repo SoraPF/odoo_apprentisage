@@ -58,7 +58,7 @@ class FrontendContact(http.Controller):
             'pages': pages,
             'cNom': contactTable.mapped('name'),
             'cMobile': contactTable.mapped('mobile'),
-            'cImg': base64.b64encode(contactTable.mapped('avatar_128')[0]).decode('utf-8'),
+            'cImg': ([base64.b64encode(image).decode('utf-8') for image in contactTable.mapped('avatar_128')]),#fonctionne pas comme je veux
         }
 
         return json.dumps(response)
