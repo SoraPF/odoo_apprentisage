@@ -6,6 +6,7 @@ import base64
 import requests
 from odoo import fields, http, models
 from odoo.http import request
+from odoo.tools.image import image_data_uri
 class FrontendContact(http.Controller):
     @http.route('/frontend_contact/contact', website=True, auth='user')
     def index(self, **kw):
@@ -58,7 +59,7 @@ class FrontendContact(http.Controller):
             'pages': pages,
             'cNom': contactTable.mapped('name'),
             'cMobile': contactTable.mapped('mobile'),
-            'cImg': ([base64.b64encode(image).decode('utf-8') for image in contactTable.mapped('avatar_128')]),#fonctionne pas comme je veux
+            'cImg': ([image_data_uri(base64.b64encode(image)) for image in contactTable.mapped('avatar_128')]),#fonctionne pas comme je veux
         }
 
         return json.dumps(response)
