@@ -32,7 +32,7 @@
                     <div class="overflow-x-auto">
                         <table id="table" class="table table-zebra">
                             <tr>
-                                <th>Nom</th>
+                                <th>Nom<input type="button" class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2" value="v"/></th>
                                 <th>Mobile</th>
                                 <th>Devis</th>
                             </tr>

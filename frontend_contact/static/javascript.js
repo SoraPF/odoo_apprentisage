@@ -1,7 +1,7 @@
 var input = document.getElementById("search_bar");
 var etiquetteDiv = document.getElementById('etiquettes');
 var badges = etiquetteDiv.children;
-var badges_textContent = set_etiquette();
+var badges_textContent;
 
 //la search bar et tous
 input.addEventListener("input",function(){
@@ -17,6 +17,7 @@ input.addEventListener("keydown",function(event){
         badge.classList.add('badge', 'badge-success', 'gap-2', 'cursor-pointer');
         etiquetteDiv.appendChild(badge);
         input.value = '';
+        badges_textContent = set_etiquette();
     }
 });
 //etiquette
@@ -25,16 +26,17 @@ etiquetteDiv.addEventListener("click", function(event){
         //console.log("Cliqué sur une balise <span>.");
         event.target.parentNode.removeChild(event.target);
     }
+    paginationWithEtiquette(1, null, badges_textContent, input.value);
 });
 
 //request next or previous page
 document.addEventListener("DOMContentLoaded", function () {
-document.getElementById("prevBtn").addEventListener("click",function () {
-    paginationWithEtiquette(null, '-1', badges_textContent, input.value);
-});
-document.getElementById("nextBtn").addEventListener("click",function () {
-    paginationWithEtiquette(null, '1', badges_textContent, input.value);
-});
+    document.getElementById("prevBtn").addEventListener("click",function () {
+        paginationWithEtiquette(null, '-1', badges_textContent, input.value);
+    });
+    document.getElementById("nextBtn").addEventListener("click",function () {
+        paginationWithEtiquette(null, '1', badges_textContent, input.value);
+    });
 
 });
 
@@ -136,14 +138,14 @@ devi.forEach(function(button) {
 });
 
 function set_etiquette(){
-var badges_textContent = [];
-if (badges.length > 2){
-    for (var i = 2; i < badges.length; i++) {
-        badges_textContent.push(badges[i].textContent);
+    var badges_textContent = [];
+    if (badges.length > 2){
+        for (var i = 2; i < badges.length; i++) {
+            badges_textContent.push(badges[i].textContent);
+        }
+        console.log(badges_textContent);
+    }else{
+        badges_textContent = null;
     }
-    console.log(badges_textContent);
-}else{
-    badges_textContent = null;
-}
-return badges_textContent;
+    return badges_textContent;
 }

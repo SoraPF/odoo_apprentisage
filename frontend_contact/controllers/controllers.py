@@ -141,7 +141,7 @@ def paginaTable(element, term, badges, limit, offset):
         for t in badges:
             eleterm = [(e, 'ilike', t)]
             results = request.env['res.partner'].sudo().search(eleterm, limit=(
-                        limit - len(theTable)) if limit is not None else False, offset=offset)
+                        limit - len(theTable)) if limit is not None and limit > len(theTable) else False, offset=offset)
             for res in results:
                 if res not in theTable:
                     theTable += res
