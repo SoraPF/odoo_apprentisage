@@ -26,6 +26,7 @@ etiquetteDiv.addEventListener("click", function(event){
         //console.log("Cliqué sur une balise <span>.");
         event.target.parentNode.removeChild(event.target);
     }
+    badges_textContent = set_etiquette();
     paginationWithEtiquette(1, null, badges_textContent, input.value);
 });
 

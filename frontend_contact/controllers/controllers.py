@@ -133,7 +133,10 @@ def infoTable(element, term, limit, offset):
 
 def paginaTable(element, term, badges, limit, offset):
     theTable = request.env['res.partner']
-    badges.append(term)
+    if not term and not badges:
+        badges.append(term)
+    if term and term.strip() and not badges:
+        badges.append(term)
 
     for e in element:
         if limit is not None and len(theTable) >= limit:
