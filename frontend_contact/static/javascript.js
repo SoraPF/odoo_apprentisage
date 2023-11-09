@@ -138,6 +138,7 @@ devi.forEach(function(button) {
                     success: function(voids){
                         console.log(data);
                         var tableContainer = document.getElementById('deviTable');
+                        document.getElementById('deviName').innerHTML = name;
                         tableContainer.innerHTML = '';
                         var table = document.createElement('table');
                         var thead = document.createElement('thead');
