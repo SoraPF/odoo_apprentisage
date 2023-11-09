@@ -47,11 +47,11 @@
                             <tr>
                                 <th class="border-b border-r p-2 text-center">
                                     <span class="mr-2">Name</span>
-                                    <input type="button" class="btn btn-sm btn-circle btn-ghost" value="V" id="NomInOrder"/>
+                                    <input type="button" class="btn btn-sm btn-circle btn-ghost" value="▼" id="NomInOrder"/>
                                 </th>
                                 <th class="border-b border-r p-2 text-center">
                                     <span class="mr-2">Mobile</span>
-                                    <input type="button" class="btn btn-sm btn-circle btn-ghost" value="V" id="MobileInOrder"/>
+                                    <input type="button" class="btn btn-sm btn-circle btn-ghost" value="▲▼" id="MobileInOrder"/>
                                 </th>
                                 <th class="border-b p-2 text-center">Devis</th>
                             </tr>

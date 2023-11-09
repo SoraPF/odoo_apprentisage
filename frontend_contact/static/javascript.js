@@ -150,3 +150,29 @@ function set_etiquette(){
     }
     return badges_textContent;
 }
+let NomInOrder = document.getElementById("NomInOrder");
+let MobileInOrder = document.getElementById("MobileInOrder");
+NomInOrder.addEventListener("click",function(){
+    buttonInOrder(NomInOrder,MobileInOrder);
+});
+
+MobileInOrder.addEventListener("click",function(){
+    buttonInOrder(MobileInOrder,NomInOrder);
+});
+
+function buttonInOrder(InOrder,NotInOrder){
+    switch(InOrder.value){
+        case "▲▼":
+            InOrder.value = "▼";
+            NotInOrder.value = "▲▼";
+            break;
+        case "▲":
+            InOrder.value = "▼";
+            NotInOrder.value = "▲▼";
+            break;
+        case "▼":
+            InOrder.value = "▲";
+            NotInOrder.value = "▲▼";
+            break;
+    }
+}
