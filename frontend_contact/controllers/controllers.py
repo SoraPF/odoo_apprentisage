@@ -59,7 +59,7 @@ class FrontendContact(http.Controller):
             'pages': pages,
             'cNom': contactTable.mapped('name'),
             'cMobile': contactTable.mapped('mobile'),
-            'cImg': ([image_data_uri(base64.b64encode(image)) for image in contactTable.mapped('avatar_128')]),#fonctionne pas comme je veux
+            'cImg': ([image_data_uri(image) for image in contactTable.mapped('avatar_128')]),#fonctionne pas comme je veux
         }
 
         return json.dumps(response)
