@@ -118,21 +118,6 @@ def get_current_page(D, LO, NP):
     request.session['current_page'] = CP
     return CP
 
-
-def infoTable(element, term, limit, offset):
-    theTable = request.env['res.partner']
-    for e in element:
-        if limit is not None and len(theTable) >= limit:
-            break  # Arrête la recherche si la limite est atteinte
-        eleTerm = [(e, 'ilike', term)]
-        results = request.env['res.partner'].sudo().search(eleTerm, limit=(
-                    limit - len(theTable)) if limit is not None else False, offset=offset)
-        for res in results:
-            if res not in theTable:
-                theTable += res
-    return theTable
-
-
 def paginaTable(element, term, badges, limit, offset, filtre):
     theTable = request.env['res.partner']
     if not term and not badges:
