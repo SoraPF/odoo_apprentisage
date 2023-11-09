@@ -86,13 +86,7 @@
                             </form>
                             <h3 class="font-bold text-lg">Hello!</h3>
                             <p class="py-4">Press ESC key or click on ✕ button to close</p>
-                            <table id="table" class="table table-zebra">
-                                <tr>
-                                    <th>Numéro</th>
-                                    <th>date de la commande</th>
-                                    <th>vendeur</th>
-                                    <th>Total</th>
-                                </tr>
+                            <table id="deviTable" class="table table-zebra">
                             </table>
                         </div>
                     </dialog>

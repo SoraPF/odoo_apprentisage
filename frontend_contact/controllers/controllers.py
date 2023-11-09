@@ -72,10 +72,14 @@ class FrontendContact(http.Controller):
         partner = request.env['res.partner'].search([('name', '=', cName)])
         if partner:
             devis = request.env['sale.order'].search([('partner_id', '=', partner.id)])
+            date_orders_str = [order.strftime('%Y-%m-%d %H:%M:%S') for order in devis.mapped('date_order')]
             response = {
-                "devis": devis,
+                "name": devis.mapped('name'),
+                "date": date_orders_str,
+                "seller": devis.mapped('user_id').mapped('name'),
+                "price": devis.mapped('amount_total'),
             }
-            return request.render('frontend_contact.deviPage', response)
+            return json.dumps(response)
         else:
             return None
 

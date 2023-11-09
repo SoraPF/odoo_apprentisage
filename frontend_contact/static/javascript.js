@@ -125,13 +125,43 @@ devi.forEach(function(button) {
     button.addEventListener("click",function(){
         var name = button.id;
         console.log(name);
-         var dataToSend = {  name : name,}
+        var dataToSend = {  name : name,}
         $.ajax({
             type:"GET",
+            dataType:'json',
             url: "/fr_BE/frontend_contact/contact/devis",
             data:dataToSend,
             success: function(data){
-                console.log(data);
+                $.ajax({
+                    type:"GET",
+                    url: "/fr_BE/frontend_contact/contact",
+                    success: function(voids){
+                        console.log(data);
+                        var tableContainer = document.getElementById('deviTable');
+                        tableContainer.innerHTML = '';
+                        var table = document.createElement('table');
+                        var thead = document.createElement('thead');
+                        var headerRow = thead.insertRow();
+                        headerRow.insertCell(0).textContent = 'Nom';
+                        headerRow.insertCell(1).textContent = 'Date';
+                        headerRow.insertCell(2).textContent = 'Vendeur';
+                        headerRow.insertCell(3).textContent = 'Prix';
+                        table.appendChild(thead);
+                        var tbody = document.createElement('tbody');
+                        for (var i = 0; i < data.name.length; i++) {
+                            var row = tbody.insertRow();
+                            row.insertCell(0).textContent = data.name[i];
+                            row.insertCell(1).textContent = data.date[i];
+                            row.insertCell(2).textContent = data.seller[i];
+                            row.insertCell(3).textContent = data.price[i];
+                        }
+                        table.appendChild(tbody);
+                        tableContainer.appendChild(table);
+
+                    },error: function (error2) {
+                        console.error("Erreur de la deuxième requête AJAX");
+                    }
+                });
             },error: function (error) {
                 console.error("Erreur de la requête AJAX");
             }
