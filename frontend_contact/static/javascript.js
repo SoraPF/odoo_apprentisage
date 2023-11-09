@@ -2,10 +2,10 @@ var input = document.getElementById("search_bar");
 var etiquetteDiv = document.getElementById('etiquettes');
 var badges = etiquetteDiv.children;
 var badges_textContent;
-
+var filter = "name";
 //la search bar et tous
 input.addEventListener("input",function(){
-    paginationWithEtiquette(1, null, badges_textContent, input.value);
+    paginationWithEtiquette(1, null, badges_textContent, input.value,filter);
 });
 
 input.addEventListener("keydown",function(event){
@@ -27,16 +27,16 @@ etiquetteDiv.addEventListener("click", function(event){
         event.target.parentNode.removeChild(event.target);
     }
     badges_textContent = set_etiquette();
-    paginationWithEtiquette(1, null, badges_textContent, input.value);
+    paginationWithEtiquette(1, null, badges_textContent, input.value,filter);
 });
 
 //request next or previous page
 document.addEventListener("DOMContentLoaded", function () {
     document.getElementById("prevBtn").addEventListener("click",function () {
-        paginationWithEtiquette(null, '-1', badges_textContent, input.value);
+        paginationWithEtiquette(null, '-1', badges_textContent, input.value,filter);
     });
     document.getElementById("nextBtn").addEventListener("click",function () {
-        paginationWithEtiquette(null, '1', badges_textContent, input.value);
+        paginationWithEtiquette(null, '1', badges_textContent, input.value,filter);
     });
 
 });
@@ -50,17 +50,18 @@ buttons.forEach(function(button) {
         // take text from button to print in logs and function
         var buttonText = parseInt(button.textContent);
         //console.log(buttonText);
-        paginationWithEtiquette(buttonText, null, badges_textContent, input.value);
+        paginationWithEtiquette(buttonText, null, badges_textContent, input.value,filter);
     });
 });
 //function pagination click page and go to the page
 
-function paginationWithEtiquette(page, direction, badges, term){
+function paginationWithEtiquette(page, direction, badges, term, filter){
     if (!isNaN(page)) {
         var dataToSend = {  page : page,
                             direction : direction,
                             badge : badges,
-                            term : term
+                            term : term,
+                            filter: filter,
                             };
                             //console.log(badges,dataToSend.badge)
         $.ajax({
@@ -101,7 +102,7 @@ function paginationWithEtiquette(page, direction, badges, term){
                             btnNew.textContent = item;
                             btnNew.classList.add('join-item', 'btn');
                             btnNew.addEventListener('click', function() {
-                                paginationWithEtiquette(item, null, badges_textContent, input.value);
+                                paginationWithEtiquette(item, null, badges_textContent, input.value,filter);
                             });
                             btnDiv.appendChild(btnNew);
                         });
@@ -176,29 +177,35 @@ function buttonInOrder(InOrder,NotInOrder){
             NotInOrder.value = "▲▼";
             break;
     }
+    getInOrder(InOrder,InOrder.value);
 }
 
 function getInOrder(who, is){
     if(who === document.getElementById("MobileInOrder")){
         switch(who.value){
-            case "▲"
-
+            case "▲":
+                //récupéré le tableau ordre decroisans avec les nom
+                filter = "mobile desc";
                 break;
 
             case "▼":
-
+                //récupéré le tableau ordre croissans(pas grand chose)
+                filter = "mobile";
                 break;
         }
     }
     if(who === document.getElementById("NomInOrder")){
         switch(is){
             case "▲":
-
+                //récupéré le tableau ordre decroisans avec les mobile
+                filter = "name desc";
                 break;
 
             case "▼":
-
+                //récupéré le tableau ordre croisans avec les mobile
+                filter = "name";
                 break;
         }
     }
+    paginationWithEtiquette(1, null, badges_textContent, input.value, filter);
 }

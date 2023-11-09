@@ -20,13 +20,13 @@ class FrontendContact(http.Controller):
         current_page = request.session['current_page']
 
         element = ['name', 'mobile']
-        tableau = infoTable(element, "", None, None)
+        tableau = paginaTable(element, "", [], None, None, "")
 
         pagesOffset = getOffset(tableau, contact_per_page)
 
         offset = (current_page - 1) * contact_per_page
 
-        contact = infoTable(element, "", contact_per_page, offset)
+        contact = paginaTable(element, "", [], contact_per_page, offset, "")
 
         pages = LimitButtonPages(pagesOffset + 1, current_page)
 
@@ -42,16 +42,17 @@ class FrontendContact(http.Controller):
         badge = request.httprequest.args.getlist('badge[]')
         direction = request.params.get('direction')
         element = ['name', 'mobile']
+        filter = request.params.get('filter')
         nextPage = request.params.get('page')
         if nextPage is not None and nextPage != "":
             nextPage = int(nextPage)
         logger.info(request.httprequest.args)
 
-        limitOffset = getOffset(paginaTable(element, term, badge, None, None), contact_per_page)
+        limitOffset = getOffset(paginaTable(element, term, badge, None, None, ""), contact_per_page)
         current_page = get_current_page(direction, limitOffset, nextPage)
 
         offset = (current_page - 1) * contact_per_page
-        contactTable = paginaTable(element, term, badge, contact_per_page, offset)
+        contactTable = paginaTable(element, term, badge, contact_per_page, offset, filter)
 
         pages = LimitButtonPages(limitOffset + 1, current_page)
 
@@ -132,7 +133,7 @@ def infoTable(element, term, limit, offset):
     return theTable
 
 
-def paginaTable(element, term, badges, limit, offset):
+def paginaTable(element, term, badges, limit, offset, filtre):
     theTable = request.env['res.partner']
     if not term and not badges:
         badges.append(term)
@@ -144,7 +145,11 @@ def paginaTable(element, term, badges, limit, offset):
             break  # Arrête la recherche si la limite est atteinte
         for t in badges:
             eleterm = [(e, 'ilike', t)]
-            results = request.env['res.partner'].sudo().search(eleterm, limit=(
+            if filtre == "":
+                results = request.env['res.partner'].sudo().search(eleterm, limit=(
+                        limit - len(theTable)) if limit is not None and limit > len(theTable) else False, offset=offset)
+            else:
+                results = request.env['res.partner'].sudo().search(eleterm, order=filtre, limit=(
                         limit - len(theTable)) if limit is not None and limit > len(theTable) else False, offset=offset)
             for res in results:
                 if res not in theTable:
