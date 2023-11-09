@@ -150,6 +150,7 @@ function set_etiquette(){
     }
     return badges_textContent;
 }
+//button in order mobile or name
 let NomInOrder = document.getElementById("NomInOrder");
 let MobileInOrder = document.getElementById("MobileInOrder");
 NomInOrder.addEventListener("click",function(){
@@ -174,5 +175,30 @@ function buttonInOrder(InOrder,NotInOrder){
             InOrder.value = "▲";
             NotInOrder.value = "▲▼";
             break;
+    }
+}
+
+function getInOrder(who, is){
+    if(who === document.getElementById("MobileInOrder")){
+        switch(who.value){
+            case "▲"
+
+                break;
+
+            case "▼":
+
+                break;
+        }
+    }
+    if(who === document.getElementById("NomInOrder")){
+        switch(is){
+            case "▲":
+
+                break;
+
+            case "▼":
+
+                break;
+        }
     }
 }
