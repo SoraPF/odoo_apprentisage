@@ -75,14 +75,14 @@ function paginationWithEtiquette(page, direction, badges, term, filter){
                     url: "/fr_BE/frontend_contact/contact",
                     success: function(voids){
                         console.log(data);
-                        var row = document.querySelectorAll('table tr');
+                        var row = document.querySelectorAll('table tr.contact');
                         var btnDiv = document.getElementById('pagesButtons');
                         btnDiv.textContent = '';
-                        for (var i = 1; i < row.length; i++) {
+                        for (var i = 0; i < row.length; i++) {
                             var cells = row[i].querySelectorAll('td');
-                            var name = data.cNom[i-1];
-                            var mobile = data.cMobile[i-1];
-                            var img = data.cImg[i-1];
+                            var name = data.cNom[i];
+                            var mobile = data.cMobile[i];
+                            var img = data.cImg[i];
 
                             if(name){
                             cells[0].querySelector('b').textContent = name;
