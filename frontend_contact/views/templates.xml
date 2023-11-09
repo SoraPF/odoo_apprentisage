@@ -8,39 +8,58 @@
                     <script src="https://code.jquery.com/jquery-3.6.0.min.js">const $ = require('jquery');</script>
                 </head>
                 <body>
-                    <h1 class="text-3xl font-bold underline">Contact</h1>
-
-                    <input type="text" placeholder="Search contact" id="search_bar" name="searchBar"
-                           t-att-value="input_data"
-                           class="input input-bordered input-secondary w-full max-w-xs"/>
-                    <div class="join">
-                        <input id="prevBtn" type="button" class="join-item btn" value="prev"/>
-                        <div id="pagesButtons">
-                            <t t-foreach="pages" t-as="nbpage">
-                                <button type="button" class="join-item btn" t-attf-id="btn#{nbpage}">
-                                    <t t-esc="nbpage"/>
-                                </button>
-                            </t>
+                    <div class="navbar bg-blue-800">
+                        <div class="navbar-start">
+                            <h1 class="text-3xl font-bold underline center">Contact</h1>
                         </div>
-                        <input id="nextBtn" type="button" class="join-item btn" value="next"/>
-                    </div>
-                    <div id="etiquettes" class="flex flex-wrap space-x-2 space-y-2">
-                        <input type="hidden" class="badge badge-success gap-2 cursor-pointer"/>
-                        <span></span>
+                        <div class="navbar-center">
+                            <div class="relative">
+                                <input type="text" placeholder="Search contact" id="search_bar" name="searchBar"
+                                       t-att-value="input_data"
+                                       class="input input-bordered input-secondary w-full max-w-xs pr-10"/>
+                                <div class="absolute top-0 right-0 flex items-center h-full pr-3">
+                                    <svg class="text-gray-500" fill="none" stroke="currentColor" stroke-linecap="round"
+                                         stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24">
+                                        <path d="M21 21l-5-5m-4 0a7 7 0 110-14 7 7 0 010 14z"></path>
+                                    </svg>
+                                </div>
+                            </div>
+                            <div class="join">
+                                <input id="prevBtn" type="button" class="join-item btn" value="prev"/>
+                                <div id="pagesButtons">
+                                    <t t-foreach="pages" t-as="nbpage">
+                                        <button type="button" class="join-item btn" t-attf-id="btn#{nbpage}">
+                                            <t t-esc="nbpage"/>
+                                        </button>
+                                    </t>
+                                </div>
+                                <input id="nextBtn" type="button" class="join-item btn" value="next"/>
+                            </div>
+                        </div>
+                        <div id="etiquettes" class="navbar-start flex flex-wrap space-x-2 space-y-2 mt-6">
+                            <input type="hidden" class="badge badge-success gap-2 cursor-pointer"/>
+                            <span></span>
+                        </div>
                     </div>
 
-                    <div class="overflow-x-auto">
+                    <div class="overflow-x-auto mt-6">
                         <table id="table" class="table table-zebra">
                             <tr>
-                                <th>Nom<input type="button" class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2" value="v"/></th>
+                                <th>Nom
+                                    <input type="button" class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
+                                           value="V"/>
+                                </th>
                                 <th>Mobile</th>
                                 <th>Devis</th>
                             </tr>
                             <t t-foreach="contact" t-as="ct">
                                 <tr>
                                     <td>
-                                        <img t-att-src="image_data_uri(ct.avatar_128)" alt="Employee Image" class="avatar mask mask-squircle w-12 h-12"/>
-                                        <b><t t-esc="ct.name"/></b>
+                                        <img t-att-src="image_data_uri(ct.avatar_128)" alt="Employee Image"
+                                             class="avatar mask mask-squircle w-12 h-12"/>
+                                        <b>
+                                            <t t-esc="ct.name"/>
+                                        </b>
                                     </td>
                                     <td>
                                         <t t-esc="ct.mobile"/>
