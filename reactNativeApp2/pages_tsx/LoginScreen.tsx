@@ -1,7 +1,7 @@
 // LoginScreen.js
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
-
+import {authenticateAndGetSession} from './authentification.js';
 
 const LoginScreen = () => {
   const [username, setUsername] = useState('');
@@ -10,8 +10,9 @@ const LoginScreen = () => {
   const handleLogin = () => {
     console.log('Bouton appuyé!');
     // Ajoutez ici la logique de connexion avec vos données
-    if (username == 'Oui' && password == 'Oui'){
+    if (username != '' && password != ''){
         console.log('Connexion réussie !');
+        authenticateAndGetSession(username,password);
     }
   };
 

@@ -1,29 +1,45 @@
 import axios from 'axios';
 
-const fetchData = async () => {
+const authenticateAndGetSession = async (username, password) => {
   try {
-    const response = await axios.get('http://odoo.local/fr_BE/frontend_contact/contact', {
-      headers: {
-        Authorization: 'Bearer votre-jeton-d-authentification',
+    const odooAuthEndpoint = 'https://your_odoo_url/web/session/authenticate';
+
+    const authResponse = await axios.post(odooAuthEndpoint, {
+      jsonrpc: '2.0',
+      method: 'call',
+      params: {
+        db: 'odoo',
+        login: username,
+        password: password,
       },
     });
 
-    // Accédez aux données renvoyées par l'API
-    const responseData = response.data;
+    // Assuming the authentication response contains a session ID
+    const sessionId = authResponse.data.result.session_id;
 
-    // Faites quelque chose avec les données
-    console.log('Données récupérées:', responseData);
-
-    // Par exemple, si les données sont un tableau d'utilisateurs
-    responseData.users.forEach(user => {
-      console.log('Nom d\'utilisateur:', user.username);
-      console.log('Mot de passe:', user.password);
-    });
+    // Call your fetchData function with the obtained session ID
+    await fetchData(sessionId);
   } catch (error) {
-    // Gestion des erreurs
-    console.error(error);
+    console.error('Authentication error:', error);
   }
 };
 
-// Appelez la fonction pour récupérer les données
-fetchData();
+const fetchData = async (sessionId) => {
+  try {
+    const odooApiEndpoint = 'https://your_odoo_url/fr_BE/frontend_contact/contact';
+
+    const response = await axios.get(odooApiEndpoint, {
+      headers: {
+        Cookie: `session_id=${sessionId}`,
+      },
+    });
+
+    // Handle the API response as needed
+    const responseData = response.data;
+    console.log('Data retrieved:', responseData);
+  } catch (error) {
+    console.error('API request error:', error);
+  }
+};
+
+authenticateAndGetSession();
