@@ -42,4 +42,6 @@ const fetchData = async (sessionId) => {
   }
 };
 
-authenticateAndGetSession();
+export default {
+  authenticateAndGetSession,
+};
