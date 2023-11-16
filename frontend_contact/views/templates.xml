@@ -1,24 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data>
-<!--
-        <template id="listing">
-          <ul>
-            <li t-foreach="objects" t-as="object">
-              <a t-attf-href="#{ root }/objects/#{ object.id }">
-                <t t-esc="object.display_name"/>
-              </a>
-            </li>
-          </ul>
+        <template id="list_contact_page" name="lcp">
+            <html data-theme="synthwave" id="page">
+                <head>
+                    <link rel="stylesheet" href="/frontend_contact/static/output.css"/>
+                    <script src="https://code.jquery.com/jquery-3.6.0.min.js">const $ = require('jquery');</script>
+                </head>
+                <body>
+                    <div class="navbar bg-blue-800">
+                        <div class="navbar-start">
+                            <h1 class="text-3xl font-bold underline center">Contact</h1>
+                        </div>
+                        <div class="navbar-center">
+                            <div class="relative">
+                                <input type="text" placeholder="Search contact" id="search_bar" name="searchBar"
+                                       t-att-value="input_data"
+                                       class="input input-bordered input-secondary w-full max-w-xs pr-10"/>
+                                <div class="absolute top-0 right-0 flex items-center h-full pr-3">
+                                    <svg class="text-gray-500" fill="none" stroke="currentColor" stroke-linecap="round"
+                                         stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24">
+                                        <path d="M21 21l-5-5m-4 0a7 7 0 110-14 7 7 0 010 14z"></path>
+                                    </svg>
+                                </div>
+                            </div>
+                            <div class="join">
+                                <input id="prevBtn" type="button" class="join-item btn" value="prev"/>
+                                <div id="pagesButtons">
+                                    <t t-foreach="pages" t-as="nbpage">
+                                        <button type="button" class="join-item btn" t-attf-id="btn#{nbpage}">
+                                            <t t-esc="nbpage"/>
+                                        </button>
+                                    </t>
+                                </div>
+                                <input id="nextBtn" type="button" class="join-item btn" value="next"/>
+                            </div>
+                        </div>
+                        <div id="etiquettes" class="navbar-start flex flex-wrap space-x-2 space-y-2 mt-6">
+                            <input type="hidden" class="badge badge-success gap-2 cursor-pointer"/>
+                            <span></span>
+                        </div>
+                    </div>
+
+                    <div class="overflow-x-auto mt-6">
+                        <table id="table" class="table table-zebra w-full border">
+                            <tr>
+                                <th class="border-b border-r p-2 text-center">
+                                    <span class="mr-2">Name</span>
+                                    <input type="button" class="btn btn-sm btn-circle btn-ghost" value="▼"
+                                           id="NomInOrder"/>
+                                </th>
+                                <th class="border-b border-r p-2 text-center">
+                                    <span class="mr-2">Mobile</span>
+                                    <input type="button" class="btn btn-sm btn-circle btn-ghost" value="▲▼"
+                                           id="MobileInOrder"/>
+                                </th>
+                                <th class="border-b p-2 text-center">Devis</th>
+                            </tr>
+
+                            <t t-foreach="contact" t-as="ct">
+                                <tr class="contact">
+                                    <td>
+                                        <img t-att-src="image_data_uri(ct.avatar_128)" alt="Employee Image"
+                                             class="avatar mask mask-squircle w-12 h-12"/>
+                                        <b>
+                                            <t t-esc="ct.name"/>
+                                        </b>
+                                    </td>
+                                    <td class="border-l border-r p-2">
+                                        <t t-esc="ct.mobile"/>
+                                    </td>
+                                    <td class="text-center">
+                                        <input type="button" class="btn s center" t-att-id="ct.name" value="devis"
+                                               onclick="my_modal.showModal()"/>
+                                    </td>
+                                </tr>
+                            </t>
+                        </table>
+                    </div>
+
+                    <dialog id="my_modal" class="modal">
+                        <div class="modal-box">
+                            <form method="dialog">
+                                <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+                            </form>
+                            <h3 class="font-bold text-lg" id="deviName">Nom</h3>
+                            <table id="deviTable" class="table table-zebra">
+                            </table>
+                            <p class="py-4">Press ESC key or click on ✕ button to close</p>
+                        </div>
+                    </dialog>
+                </body>
+                <script type="text/javascript" src="/frontend_contact/static/javascript.js"/>
+            </html>
         </template>
-        <template id="object">
-          <h1><t t-esc="object.display_name"/></h1>
-          <dl>
-            <t t-foreach="object._fields" t-as="field">
-              <dt><t t-esc="field"/></dt>
-              <dd><t t-esc="object[field]"/></dd>
-            </t>
-          </dl>
-        </template>
--->
     </data>
 </odoo>
