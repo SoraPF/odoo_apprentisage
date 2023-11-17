@@ -11,7 +11,7 @@ const LoginScreen = () => {
     console.log('Bouton appuyé!');
     // Ajoutez ici la logique de connexion avec vos données
     if (username != '' && password != ''){
-        console.log('insert un, mdp');
+        console.log('insert',username,password);
         authObjet.authenticateAndGetSession(username,password);
     }
   };
