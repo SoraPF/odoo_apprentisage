@@ -8,23 +8,28 @@ const requestCurl = async (username, password) => {
         password: password,
       },
     });
-
-    fetch('http://127.0.0.1:8069/web/session/authenticate', {
-      method: 'POST',
-      headers: {
+    const url ='http://127.0.0.1:8069/web/session/authenticate';
+    const met = 'POST';
+    const head = {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
-      },
-      body: data,
-    })
-      .then(response => response.json())
-      .then(data => {
-        console.log('response', data.result);
-      })
-      .catch(error => {
-        console.log('error:', error);
-      });
+      }
+    responseCurl(url,met,head,data);
+}
 
+function responseCurl(url,met,head,data){
+    fetch(url,{
+    method:met,
+    headers:head,
+    body:data,
+    })
+    .then(response => response.json())
+    .then(contactData => {
+      console.log('Contacts:', contactData.result);
+    })
+    .catch(error => {
+      console.error('Error fetching contacts:', error);
+    })
 }
 
 export default {requestCurl};
