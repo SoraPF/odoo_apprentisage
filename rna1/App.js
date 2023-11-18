@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
 import authentification from './resources/authentification';
+import curl from './resources/curl';
 
 const LoginScreen = () => {
   const [username, setUsername] = useState('');
@@ -11,7 +12,8 @@ const LoginScreen = () => {
     console.log('Bouton appuyé!');
     if (username != '' && password != ''){
         console.log('insert',username,password);
-        authentification.authenticateAndGetSession(username,password);
+        //authentification.authenticateAndGetSession(username,password);
+        curl.requestCurl(username,password);
     }
   };
 
