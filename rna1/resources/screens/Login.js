@@ -4,7 +4,7 @@ import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-nativ
 import authentification from '../authentification';
 import curl from '../curl';
 
-const LoginScreen = () => {
+function Login({navigation}) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
@@ -13,7 +13,9 @@ const LoginScreen = () => {
     if (username != '' && password != ''){
         console.log('insert',username,password);
         //authentification.authenticateAndGetSession(username,password);
-        curl.requestCurl(username,password);
+        if (curl.requestCurl(username,password)){
+            navigation.navigate('Root', { screen: 'Profile' });
+        }
     }
   };
 
@@ -69,4 +71,4 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
 });
-export default LoginScreen;
+export default Login;
