@@ -16,10 +16,10 @@ const requestCurl = async (username, password, navigation) => {
   }
 
   // Pass the username and navigation parameters to responseCurl
-  responseCurl(url, met, head, data, { username, navigation });
+  responseCurl(url, met, head, data, { navigation });
 }
 
-function responseCurl(url, met, head, data, { username, navigation }) {
+function responseCurl(url, met, head, data, { navigation }) {
   // Using the fetch function to make a network request
   fetch(url, {
     method: met,     // HTTP method (e.g., 'GET', 'POST')
@@ -30,7 +30,9 @@ function responseCurl(url, met, head, data, { username, navigation }) {
     .then(contactData => {
       // Log the retrieved contacts data and navigate to 'Home' screen
       console.log('Contacts:', contactData.result);
-      navigation.navigate('Root', { screen: 'Home', params: { user: username } });
+      const is_admin = contactData.result.is_admin;
+      const username = contactData.result.name;
+      navigation.navigate('Root', { screen: 'Home', params: { user: username, admin: is_admin} });
     })
     .catch(error => {
       // Handle errors that may occur during the fetch

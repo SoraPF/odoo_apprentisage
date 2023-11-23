@@ -6,6 +6,7 @@ export default function Home({route, navigation}) {
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
       <Text>Bienvenue {JSON.stringify(route.params.user)}</Text>
+      <Text>is admin = {JSON.stringify(route.params.admin)}</Text>
     </View>
   );
 }
