@@ -14,7 +14,7 @@ function Login({navigation}) {
         console.log('insert',username,password);
         //authentification.authenticateAndGetSession(username,password);
         if (curl.requestCurl(username,password)){
-            navigation.navigate('Root', { screen: 'Profile' });
+            navigation.navigate('Root', { screen: 'Home', params:{user:username} });
         }
     }
   };
