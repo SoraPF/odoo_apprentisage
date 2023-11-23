@@ -1,7 +1,6 @@
 const requestCurl = async (username, password, navigation) => {
   let data = JSON.stringify({
     jsonrpc: '2.0',
-    method: 'call',
     params: {
       db: 'odoo',
       login: username,
@@ -29,10 +28,10 @@ function responseCurl(url, met, head, data, { navigation }) {
     .then(response => response.json())  // Parse the response as JSON
     .then(contactData => {
       // Log the retrieved contacts data and navigate to 'Home' screen
-      console.log('Contacts:', contactData.result);
-      const is_admin = contactData.result.is_admin;
-      const username = contactData.result.name;
-      navigation.navigate('Root', { screen: 'Home', params: { user: username, admin: is_admin} });
+      console.log('avant résulta:', contactData);
+      console.log('résulta:', contactData.result);
+      const data = contactData.result;
+      navigation.navigate('Root', { screen: 'Home', params: { donner : data } });
     })
     .catch(error => {
       // Handle errors that may occur during the fetch

@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
 import authentification from '../authentification';
-import curl from '../curl';
+import curl from '../authentCurl';
 
 function Login({navigation}) {
   const [username, setUsername] = useState('');
