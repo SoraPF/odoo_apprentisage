@@ -13,9 +13,7 @@ function Login({navigation}) {
     if (username != '' && password != ''){
         console.log('insert',username,password);
         //authentification.authenticateAndGetSession(username,password);
-        if (curl.requestCurl(username,password)){
-            navigation.navigate('Root', { screen: 'Home', params:{user:username} });
-        }
+        curl.requestCurl(username,password,navigation)
     }
   };
 
