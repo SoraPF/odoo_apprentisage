@@ -83,11 +83,11 @@ class FrontendContact(http.Controller):
         else:
             return None
 
-    @http.route('/contact', website=True, auth='user')
-    def index(self, **kw):
+    @http.route('/contact', methods=['POST'] ,type='json', auth="none", cors="*")
+    def route_contact(self):
         contacts = request.env['res.partner'].sudo().search([])
-        contact_list = [{'name': contact.name,'mobile':contact.mobile} for contact in contacts]
-        return {'status':200,'response':contact_list,'message':'Success'}
+        contact_list = [{'name': contact.name, 'mobile': contact.mobile} for contact in contacts]
+        return {'status': 200, 'response': contact_list, 'message': 'Success'}
 
 def getOffset(contacts, cpp):
     cpt = 1
