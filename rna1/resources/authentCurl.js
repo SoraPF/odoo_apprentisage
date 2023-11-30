@@ -18,6 +18,16 @@ const requestCurl = async (username, password, navigation) => {
   responseCurl(url, met, head, data, { navigation });
 }
 
+const get_set_cookies = function(headers) {
+    const set_cookies = []
+    for (const [name, value] of headers) {
+        if (name === "set-cookie") {
+            set_cookies.push(value)
+        }
+    }
+    return set_cookies
+}
+
 function responseCurl(url, met, head, data, { navigation }) {
   // Using the fetch function to make a network request
   fetch(url, {
@@ -25,15 +35,20 @@ function responseCurl(url, met, head, data, { navigation }) {
     headers: head,   // Request headers
     body: data,      // Request body data
   })
-    .then(response => response.json())  // Parse the response as JSON
+    .then(response => {
+     const set_cookies = get_set_cookies(response.headers)
+     console.log("cookie:",set_cookies);
+     console.log("response:",response);
+     console.log("response_headers:",response.headers);
+     return response.json();// Parse the response as JSON
+    })
     .then(contactData => {
-      //let cookies = {"Set-Cookie": contactData.headers.get('set-cookie')};
-      //console.log('Cookies:', cookies);
-      // Log the retrieved contacts data and navigate to 'Home' screen
+      console.log("data:",contactData);
+    /*
       console.log('avant résultat:', contactData);
       console.log('résultat:', contactData.result);
       const data = contactData.result;
-      navigation.navigate('Root', { screen: 'Home', params: { donner : data } });
+      navigation.navigate('Root', { screen: 'Home', params: { donner : data } });*/
     })
     .catch(error => {
       // Handle errors that may occur during the fetch

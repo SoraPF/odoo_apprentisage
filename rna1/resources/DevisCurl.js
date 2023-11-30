@@ -1,4 +1,5 @@
 const deviCurl = async (navigation,name) => {
+    AsyncStorage.setItem('@app:session', token);
   let data = JSON.stringify({
     jsonrpc: '2.0',
     params: {username:name},
@@ -8,7 +9,9 @@ const deviCurl = async (navigation,name) => {
   const head = {
     'Accept': 'application/json',
     'Content-Type': 'application/json',
+    'Cookie':token,
   };
+
 
   // Pass the username and navigation parameters to responseCurl
   responseCurl(url, met, head, data, { navigation });
