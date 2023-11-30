@@ -83,7 +83,7 @@ class FrontendContact(http.Controller):
         else:
             return None
 
-    @http.route('/contact', methods=['POST'] ,type='json', auth="none", cors="*")
+    @http.route('/contact', type='json', auth="none", cors="*")
     def route_contact(self):
         contacts = request.env['res.partner'].sudo().search([])
         contact_list = [{'name': contact.name, 'mobile': contact.mobile} for contact in contacts]

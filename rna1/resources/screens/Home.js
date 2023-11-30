@@ -15,7 +15,7 @@ export default function Home({route, navigation}) {
       <Text>is admin = {JSON.stringify(route.params.donner.is_admin)}</Text>
 
       <TouchableOpacity style={styles.button} onPress={listingContact}>
-        <Text style={styles.buttonText}>button</Text>
+        <Text style={styles.buttonText}>Liste Contacts</Text>
       </TouchableOpacity>
     </View>
   );

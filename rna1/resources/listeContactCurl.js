@@ -8,7 +8,7 @@ const requestCurl = async (navigation) => {
   const head = {
     'Accept': 'application/json',
     'Content-Type': 'application/json',
-  }
+  };
 
   // Pass the username and navigation parameters to responseCurl
   responseCurl(url, met, head, data, { navigation });
@@ -21,15 +21,11 @@ function responseCurl(url, met, head, data, { navigation }) {
     headers: head,   // Request headers
     body: data,      // Request body data
   })
-.then(response => {
-  if (!response.ok) {
-    console.error('Erreur de requête:', response.status, response.statusText);
-  }
-  return response.json();
-})
+.then(response => response.json())
 .then(data => {
-  console.log('Réponse réussie:', data);
-  // Utiliser les données de la réponse
+  console.log('Réponse réussie:', data.result);
+  const infoContact = data.result.response;
+  navigation.navigate('Root', { screen: 'ListContact', params: { donner : data } });
 })
 .catch(error => {
   console.error('Erreur de réseau:', error);

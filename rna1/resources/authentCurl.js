@@ -27,8 +27,8 @@ function responseCurl(url, met, head, data, { navigation }) {
   })
     .then(response => response.json())  // Parse the response as JSON
     .then(contactData => {
-       //const cookieHeader = contactData.headers.get('Set-Cookie');
-       //setCookie(cookieHeader);
+      //let cookies = {"Set-Cookie": contactData.headers.get('set-cookie')};
+      //console.log('Cookies:', cookies);
       // Log the retrieved contacts data and navigate to 'Home' screen
       console.log('avant résultat:', contactData);
       console.log('résultat:', contactData.result);
