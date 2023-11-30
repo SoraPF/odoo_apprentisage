@@ -89,6 +89,18 @@ class FrontendContact(http.Controller):
         contact_list = [{'name': contact.name, 'mobile': contact.mobile} for contact in contacts]
         return {'status': 200, 'response': contact_list, 'message': 'Success'}
 
+    @http.route('/devis/user', type='json', auth="user", cors="*")
+    def route_contact_devi(self, username):
+        partner = request.env['res.partner'].search([('name', '=', username)])
+        devis = request.env['sale.order'].search([('partner_id', '=', partner.id)])
+        date_orders_str = [order.strftime('%Y-%m-%d %H:%M:%S') for order in devis.mapped('date_order')]
+        response = [
+            {"name": devis.mapped('name')},
+            {"date": date_orders_str},
+            {"seller": devis.mapped('user_id').mapped('name')},
+            {"price": devis.mapped('amount_total')},
+        ]
+        return {'status': 200, 'response': response, 'message': 'Success'}
 def getOffset(contacts, cpp):
     cpt = 1
     for contact in contacts:  # count how many contact have contacts

@@ -1,8 +1,13 @@
 import * as React from 'react';
-import { View, SafeAreaView, Text } from 'react-native';
-import curl from '../listeContactCurl';
+import { View, SafeAreaView, Text, Button, TouchableOpacity,StyleSheet } from 'react-native';
+import curl from '../DevisCurl';
 
 export default function ListContact({route, navigation}){
+    const deviContact = (username) => {
+     console.log('Bouton appuyé!');
+     curl.deviCurl(navigation, username);
+   };
+
     if(route.params){
         console.log("information",route.params.donner.result.response);
         const responses = route.params.donner.result.response
@@ -21,6 +26,9 @@ export default function ListContact({route, navigation}){
         <View style={{ flex: 1, alignItems: 'center' }}>
           <Text>Mobile</Text>
         </View>
+        <View style={{ flex: 1, alignItems: 'center' }}>
+          <Text>devi</Text>
+        </View>
       </View>
 
       {firstTwoResponses.map((item, index) => (
@@ -30,6 +38,11 @@ export default function ListContact({route, navigation}){
           </View>
           <View style={{ flex: 1, alignItems: 'center' }}>
             <Text>{item.mobile}</Text>
+          </View>
+          <View style={{ flex: 1, alignItems: 'center' }}>
+            <TouchableOpacity style={styles.button} onPress={()=>deviContact(item.name)}>
+              <Text style={styles.buttonText}>Liste Contacts</Text>
+            </TouchableOpacity>
           </View>
         </View>
       ))}
@@ -47,3 +60,15 @@ export default function ListContact({route, navigation}){
   }
 }
 
+const styles = StyleSheet.create({
+  button: {
+    backgroundColor: 'blue',
+    padding: 10,
+    borderRadius: 5,
+  },
+  buttonText: {
+    color: 'white',
+    fontSize: 16,
+    textAlign: 'center',
+  },
+});

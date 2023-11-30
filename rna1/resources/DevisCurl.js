@@ -1,9 +1,9 @@
-const requestCurl = async (navigation) => {
+const deviCurl = async (navigation,name) => {
   let data = JSON.stringify({
     jsonrpc: '2.0',
-    params: {},
+    params: {username:name},
   });
-  const url ='http://127.0.0.1:8069/contact/devis';
+  const url ='http://127.0.0.1:8069/devis/user';
   const met = 'POST';
   const head = {
     'Accept': 'application/json',
@@ -25,11 +25,10 @@ function responseCurl(url, met, head, data, { navigation }) {
 .then(data => {
   console.log('Réponse réussie:', data.result);
   const infoContact = data.result.response;
-  navigation.navigate('Root', { screen: 'ListContact', params: { donner : data } });
 })
 .catch(error => {
   console.error('Erreur de réseau:', error);
 });
 }
 
-export default { requestCurl };
+export default { deviCurl };
