@@ -2,12 +2,12 @@ import { StatusBar } from 'expo-status-bar';
 import { View, Text, Button, TouchableOpacity, StyleSheet } from 'react-native';
 import routeHome from '../mapping/Home';
 
-export default function Home() {
+export default function Home({navigation}) {
   const handlePress = (truc) => {
     if (truc === 1) {
-      routeHome.routeHome(truc);
+      routeHome.routeHome(truc,{navigation});
     } else {
-      routeHome.routeHome(truc);
+      routeHome.routeHome(truc,{navigation});
     }
   };
 

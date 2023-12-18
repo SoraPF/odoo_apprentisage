@@ -15,8 +15,8 @@ return (
     <NavigationContainer>
         <Drawer.Navigator>
           <Drawer.Screen name="Home" component={Home} />
-          <Drawer.Screen name="ListContact" component={crud}/>
-          <Drawer.Screen name="Devis" component={Login}/>
+          <Drawer.Screen name="crud" component={crud}/>
+          <Drawer.Screen name="Login" component={Login}/>
         </Drawer.Navigator>
     </NavigationContainer>
   );
