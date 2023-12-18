@@ -4,10 +4,40 @@ import pprint
 import json
 import base64
 import requests
+import odoo
 from odoo import fields, http, models
 from odoo.http import request
 from odoo.tools.image import image_data_uri
+_logger = logging.getLogger("frontend_contact.frontend_contact")
 class FrontendContact(http.Controller):
+    @http.route('/frontend_contact/session/authenticate', type='json', auth="none", cors="http://localhost:19006/", methods=['OPTION','POST'], csrf=False)
+    def authenticate(self, db, login, password, base_location=None):
+
+        if not http.db_filter([db]):
+            raise AccessError("Database not found.")
+        pre_uid = request.session.authenticate(db, login, password)
+        if pre_uid != request.session.uid:
+            # Crapy workaround for unupdatable Odoo Mobile App iOS (Thanks Apple :@) and Android
+            # Correct behavior should be to raise AccessError("Renewing an expired session for user that has multi-factor-authentication is not supported. Please use /web/login instead.")
+            return {'uid': None}
+
+        request.session.db = db
+        registry = odoo.modules.registry.Registry(db)
+        with registry.cursor() as cr:
+            env = odoo.api.Environment(cr, request.session.uid, request.session.context)
+            if not request.db and not request.session.is_explicit:
+                # request._save_session would not update the session_token
+                # as it lacks an environment, rotating the session myself
+                http.root.session_store.rotate(request.session, env)
+
+                request.future_response.set_cookie(
+                    'session_id', request.session.sid,
+                    max_age=http.SESSION_LIFETIME, httponly=False, samesite='None', secure=True
+                )
+
+            data_resp = {**{'cookie-session': request.session.sid}, **env['ir.http'].session_info()}
+            return {'status': 200, 'response': data_resp, 'message': 'Success'}
+
     @http.route('/frontend_contact/contact', website=True, auth='user')
     def index(self, **kw):
         _logger = logging.getLogger("frontend_contact.frontend_contact")

@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const authenticateAndGetSession = async (username, password) => {
-    const odooAuthEndpoint = 'http://127.0.0.1:8069/web/session/authenticate';
+    const odooAuthEndpoint = 'http://localhost:8069/frontend_contact/session/authenticate';
     const js = '2.0';
     const params =  {db: 'odoo', login: username, password: password,};
     tryAuthen(odooAuthEndpoint, js, params);
@@ -12,6 +12,7 @@ const tryAuthen = async (url,type,params) => {
     const response = await axios.post(url, {
       jsonrpc: type,
       params: params,
+      withCredentials: true,
     });
     console.log('response', response);
   } catch (error) {

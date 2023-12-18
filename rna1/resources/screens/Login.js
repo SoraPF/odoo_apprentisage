@@ -12,8 +12,8 @@ function Login({navigation}) {
     console.log('Bouton appuyé!');
     if (username != '' && password != ''){
         console.log('insert',username,password);
-        //authentification.authenticateAndGetSession(username,password);
-        curl.requestCurl(username,password,navigation)
+        authentification.authenticateAndGetSession(username,password);
+        //curl.requestCurl(username,password,navigation)
     }
   };
 
