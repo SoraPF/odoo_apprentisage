@@ -20,16 +20,16 @@ export default function ListContact({route, navigation}){
      </View>
      <View style={{ flex: 3, justifyContent: 'center'}}>
         <View style={{ flexDirection: 'row', borderBottomWidth: 1, paddingBottom: 5 }}>
-        <View style={{ flex: 1, alignItems: 'center' }}>
-          <Text>Nom</Text>
+            <View style={{ flex: 1, alignItems: 'center' }}>
+              <Text>Nom</Text>
+            </View>
+            <View style={{ flex: 1, alignItems: 'center' }}>
+              <Text>Mobile</Text>
+            </View>
+            <View style={{ flex: 1, alignItems: 'center' }}>
+              <Text>devi</Text>
+            </View>
         </View>
-        <View style={{ flex: 1, alignItems: 'center' }}>
-          <Text>Mobile</Text>
-        </View>
-        <View style={{ flex: 1, alignItems: 'center' }}>
-          <Text>devi</Text>
-        </View>
-      </View>
 
       {firstTwoResponses.map((item, index) => (
         <View key={index} style={{ flexDirection: 'row', borderBottomWidth: 1, paddingTop: 5 }}>

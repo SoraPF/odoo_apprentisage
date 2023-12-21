@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "microservicesApp",
-    "slug": "microservicesApp",
+    "name": "MSA",
+    "slug": "MSA",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
