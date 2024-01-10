@@ -12,7 +12,7 @@ pageCount,isbn,publicationDate,publisher,category,) => {
         publisher : publisher,
         category : category,
   });
-  const url ='http://localhost:8080/api/books/edite';
+  const url ='http://localhost:8083/api/books/edite';
   const met = 'POST';
   const head = {
     'Accept': '*/*',

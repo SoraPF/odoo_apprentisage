@@ -1,11 +1,15 @@
 
-const requestCurl = async (username, password, navigation) => {
-console.log(username,password);
-  const data = JSON.stringify({
-      nom: username,
-      motDePasse: password
+const requestRegister = async (navigation, nom, prenom, email, mdp, mobile, age) => {
+  let data = JSON.stringify({
+    id : 1,
+	nom : nom,
+	prenom : prenom,
+	email : email,
+	motDePasse : mdp,
+	mobile : mobile,
+	age : age
   });
-  const url ='http://localhost:8082/api/user/login';
+  const url ='http://localhost:8082/api/user/create';
   const met = 'POST';
   const head = {
     'Accept': '*/*',
@@ -18,17 +22,15 @@ function responseCurl(url, met, head, data, { navigation }) {
   fetch(url, {
     method: met,
     mode:'cors',
-    credentials: 'include',
     headers: head,
     body: data,
   })
     .then(response => {
-     console.log("response:",response);
-      navigation.navigate('Crud',{screen:'crud'});
+     navigation.navigate('Crud',{screen:'crud'});
     })
     .catch(error => {
       console.error('Error fetching contacts:', error);
     });
 }
 
-export default { requestCurl };
+export default { requestRegister };

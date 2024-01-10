@@ -1,31 +1,30 @@
-import { StatusBar } from 'expo-status-bar';
-import { View, Text, Button, TouchableOpacity, StyleSheet } from 'react-native';
-
-function route_CRUD_page(navigation) {
-      console.log('route CRUD');
-      requestread(navigation);
-}
+// Home_mapping.js
+import { useNavigation } from '@react-navigation/native';
 
 function route_Login_page(navigation) {
-      console.log('route Connexion');
-      navigation.navigate('Login');
+  console.log('route signin');
+  navigation.navigate('Connexion',{screen:'Login'});
 }
 
-const routeHome = async (value, {navigation}) => {
+function route_Signin_page(navigation) {
+  console.log('route Connexion');
+  navigation.navigate('Connexion',{screen:'Singin'});
+}
+
+const routeHome = (value, navigation) => {
   try {
     if (value === 1) {
       route_Login_page(navigation);
     } else {
-      route_CRUD_page(navigation);
+      route_Signin_page(navigation);
     }
   } catch (error) {
     console.error('Une erreur s\'est produite lors de la navigation :', error);
-
   }
 };
 
 const requestread = async (navigation) => {
-  const url ='http://localhost:8080/api/books/list';
+  const url ='http://localhost:8083/api/books/list';
   const met = 'POST';
   const head = {
     'Accept': '*/*',
@@ -50,4 +49,4 @@ function responseCurl(url, met, head, { navigation }) {
 }
 
 
-export default { routeHome };
+export { routeHome };

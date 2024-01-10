@@ -9,16 +9,17 @@ import Home from "./resource/screens/Home_page";
 import create from "./resource/screens/CRUD/create_page";
 import edite from "./resource/screens/CRUD/edite_page";
 import readBook from "./resource/screens/CRUD/readBook_page";
+import Signin from "./resource/screens/Register_page";
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 const Drawer = createDrawerNavigator();
 const Stack = createNativeStackNavigator();
 
-function Crud(){
+function CrudNavigator(){
     return (
         <Stack.Navigator>
-          <Drawer.Screen name="crud" component={crud}/>
+          <Stack.Screen name="crud" component={crud}/>
           <Stack.Screen name="create" component={create} />
           <Stack.Screen name="edite" component={edite} />
           <Stack.Screen name="readBook" component={readBook} />
@@ -26,14 +27,23 @@ function Crud(){
     );
 }
 
+function ConnexionNavigator(){
+    return (
+        <Drawer.Navigator>
+          <Drawer.Screen name="Login" component={Login}/>
+          <Drawer.Screen name="Signin" component={Signin}/>
+        </Drawer.Navigator>
+    );
+}
+
 export default function app() {
 return (
     <NavigationContainer>
-        <Drawer.Navigator>
-          <Drawer.Screen name="Home" component={Home} />
-          <Drawer.Screen name="crud" component={Crud}/>
-          <Drawer.Screen name="Login" component={Login}/>
-        </Drawer.Navigator>
+        <Stack.Navigator>
+          <Stack.Screen name="Home" component={Home} />
+          <Stack.Screen name="Crud" component={CrudNavigator} options={{ headerShown: false }}/>
+          <Stack.Screen name="Connexion" component={ConnexionNavigator}  options={{ headerShown: false }} />
+        </Stack.Navigator>
     </NavigationContainer>
   );
 }

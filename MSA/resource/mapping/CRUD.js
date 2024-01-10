@@ -3,10 +3,10 @@ const routeCRUD = async (value, id, {navigation}) => {
   try {
       switch(value){
         case("create"):
-            navigation.navigate('create');
+            navigation.navigate('Crud',{screen:'create'});
             break;
         case("edite"):
-            navigation.navigate('edite', { id : id });
+            navigation.navigate('Crud',{screen:'edite', { id : id }});
             break;
         case("readBook"):
             requestRead(id, navigation);
@@ -18,7 +18,7 @@ const routeCRUD = async (value, id, {navigation}) => {
   }
 };
 const requestRead = async (isbn, navigation) => {
-  const url ='http://localhost:8080/api/books/search/'+isbn;
+  const url ='http://localhost:8083/api/books/search/'+isbn;
   const met = 'POST';
   const head = {
     'Accept': '*/*',
@@ -37,7 +37,7 @@ function responseCurl(url, met, head, id, { navigation }) {
 .then(response => response.json())
 .then(data => {
   console.log('Réponse réussie:', data);
-  navigation.navigate('readBook', { data : data });
+  navigation.navigate('Crud',{screen:'readBook', data : data});
 })
 .catch(error => {
   console.error('Erreur de réseau:', error);

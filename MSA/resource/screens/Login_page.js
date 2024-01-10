@@ -1,7 +1,7 @@
 // LoginScreen.js
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
-
+import requestCurl from '../mapping/login';
 
 function Login({navigation}) {
   const [username, setUsername] = useState('');
@@ -11,8 +11,7 @@ function Login({navigation}) {
     console.log('Bouton appuyé!');
     if (username != '' && password != ''){
         console.log('insert',username,password);
-        //authentification.authenticateAndGetSession(username,password);
-        //curl.requestCurl(username,password,navigation)
+        requestCurl.requestCurl(username,password,navigation);
     }
   };
 
