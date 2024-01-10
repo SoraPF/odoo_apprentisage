@@ -6,7 +6,7 @@ const routeCRUD = async (value, id, {navigation}) => {
             navigation.navigate('Crud',{screen:'create'});
             break;
         case("edite"):
-            navigation.navigate('Crud',{screen:'edite', { id : id }});
+            navigation.navigate('Crud',{screen:'edite',  id : id });
             break;
         case("readBook"):
             requestRead(id, navigation);

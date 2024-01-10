@@ -1,6 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react';
 import { View, Text, Button, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
+import bcrypt from 'bcryptjs';
 import requestRegister from '../mapping/Register';
 
 export default function Home({navigation}) {
@@ -12,21 +13,13 @@ export default function Home({navigation}) {
   const [Mobile, setMobile] = useState('');
   const [Age, setAge] = useState('');
 
-  const notVide = () => {
-    if(Nom != ""  &&  Prenom != ""  &&  Email != ""  &&  Password != ""  &&
-      VerifPassword != ""  &&  Mobile != ""  &&  Age != "" && Password == VerifPassword){
-        return true;
-    }else{
-        return false;
-    }
-  };
-
-  const handlePress = () => {
-    if(notVide() == true){
-    console.log(navigation, Nom, Prenom, Email, Password, VerifPassword, Mobile, Age);
-        requestRegister.requestRegister(navigation, Nom, Prenom, Email, Password, Mobile, Age);
-    }
-  };
+  const handlePress = async () => {
+  if (notVide() && Password === VerifPassword) {
+    const hashedPassword = await bcrypt.hash(Password, 10);
+    console.log(navigation, Nom, Prenom, Email, hashedPassword, Mobile, Age);
+    requestRegister.requestRegister(navigation, Nom, Prenom, Email, hashedPassword, Mobile, Age);
+  }
+};
 
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>

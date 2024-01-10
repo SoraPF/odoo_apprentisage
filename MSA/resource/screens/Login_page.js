@@ -1,19 +1,25 @@
 // LoginScreen.js
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
+import bcrypt from 'bcryptjs';
 import requestCurl from '../mapping/login';
 
 function Login({navigation}) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleLogin = () => {
-    console.log('Bouton appuyé!');
-    if (username != '' && password != ''){
-        console.log('insert',username,password);
-        requestCurl.requestCurl(username,password,navigation);
-    }
-  };
+  const handleLogin = async () => {
+      console.log('Bouton appuyé!');
+      if (username !== '' && password !== '') {
+        try {
+          const hashedPassword = await bcrypt.hash(password, 10);
+          console.log('insert', username, hashedPassword);
+          requestCurl.requestCurl(username, hashedPassword, navigation);
+        } catch (error) {
+          console.error('Erreur de hachage du mot de passe :', error);
+        }
+      }
+    };
 
   return (
     <View style={styles.container}>
